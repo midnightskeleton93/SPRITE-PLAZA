@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sprite Plaza — by Midnight</title>
+<style>
+  :root {
+    --bg: #0f1220;
+    --panel: #1a1f36;
+    --panel-2: #232a47;
+    --text: #e8ecff;
+    --muted: #8a93b8;
+    --accent: #6c5ce7;
+    --owned: #2ecc71;
+    --mastered: #f1c40f;
+    --missing: #3a4166;
+    --danger: #e74c3c;
+    --epic: #0074e4;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+  header {
+    padding: 20px 24px;
+    background: linear-gradient(135deg, #1a1f36, #2a1f4d);
+    border-bottom: 1px solid #2f3760;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    justify-content: space-between;
+  }
+  header h1 { margin: 0; font-size: 1.5rem; letter-spacing: 0.5px; }
+  header h1 span { color: var(--accent); }
+  .byline { color: var(--muted); font-size: 0.85rem; }
+  .epic-status { display: flex; align-items: center; gap: 8px; }
+  .epic-btn {
+    background: var(--epic);
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .epic-btn:hover { filter: brightness(1.1); }
+  .epic-btn.linked { background: #1a5c2e; }
+  .epic-dot { width: 8px; height: 8px; border-radius: 50%; background: #666; }
+  .epic-dot.on { background: #2ecc71; }
+  main { padding: 20px 24px 60px; max-width: 1200px; margin: 0 auto; }
+  .toolbar {
+    display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+    background: var(--panel); padding: 14px; border-radius: 12px;
+    margin-bottom: 18px; border: 1px solid #2f3760;
+  }
+  .toolbar input[type="text"], .toolbar select {
+    background: var(--panel-2); border: 1px solid #3a4166; color: var(--text);
+    padding: 8px 12px; border-radius: 8px; font-size: 0.9rem; outline: none;
+  }
+  .toolbar input[type="text"] { flex: 1 1 200px; min-width: 160px; }
+  .tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  .tab {
+    padding: 8px 16px; border-radius: 999px; border: 1px solid #3a4166;
+    background: var(--panel); color: var(--muted); cursor: pointer;
+    font-size: 0.9rem; transition: all 0.15s;
+  }
+  .tab:hover { color: var(--text); border-color: var(--accent); }
+  .tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .progress-wrap {
+    background: var(--panel); border: 1px solid #2f3760; border-radius: 12px;
+    padding: 14px 18px; margin-bottom: 18px;
+  }
+  .progress-label { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--muted); margin-bottom: 8px; }
+  .progress-bar { height: 10px; background: var(--panel-2); border-radius: 999px; overflow: hidden; }
+  .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--owned)); transition: width 0.3s; }
+  .grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+  }
+  .sprite {
+    background: var(--panel); border: 1px solid #2f3760; border-radius: 12px;
+    padding: 12px; display: flex; flex-direction: column; gap: 8px;
+    cursor: pointer; user-select: none; transition: transform 0.1s, border-color 0.15s;
+    position: relative;
+  }
+  .sprite:hover { transform: translateY(-2px); border-color: var(--accent); }
+  .sprite .thumb {
+    width: 100%; aspect-ratio: 1; border-radius: 8px;
+    background: var(--missing); display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; font-weight: bold; color: #aab2d8; overflow: hidden;
+  }
+  .sprite .name { font-size: 0.8rem; font-weight: 600; line-height: 1.2; }
+  .sprite .meta { font-size: 0.7rem; color: var(--muted); }
+  .sprite .badge {
+    position: absolute; top: 8px; right: 8px; font-size: 0.6rem;
+    padding: 2px 6px; border-radius: 999px; font-weight: 700;
+  }
+  .sprite[data-state="owned"] { border-color: var(--owned); }
+  .sprite[data-state="owned"] .thumb { background: rgba(46,204,113,0.18); }
+  .sprite[data-state="owned"] .badge { background: var(--owned); color: #06210f; }
+  .sprite[data-state="mastered"] { border-color: var(--mastered); }
+  .sprite[data-state="mastered"] .thumb { background: rgba(241,196,15,0.18); }
+  .sprite[data-state="mastered"] .badge { background: var(--mastered); color: #2b2000; }
+  .sprite[data-state="missing"] .badge { background: var(--missing); color: #c5cdf0; }
+  .panel {
+    background: var(--panel); border: 1px solid #2f3760; border-radius: 12px;
+    padding: 16px; margin-top: 24px;
+  }
+  .panel h2 { margin: 0 0 12px; font-size: 1.1rem; }
+  .panel p.hint { color: var(--muted); font-size: 0.8rem; margin: 0 0 12px; }
+  textarea {
+    width: 100%; min-height: 90px; background: var(--panel-2); color: var(--text);
+    border: 1px solid #3a4166; border-radius: 8px; padding: 10px; font-size: 0.85rem;
+    font-family: inherit; resize: vertical;
+  }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  button {
+    background: var(--accent); color: #fff; border: none; padding: 9px 16px;
+    border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600;
+    transition: filter 0.15s;
+  }
+  button:hover { filter: brightness(1.15); }
+  button.secondary { background: var(--panel-2); color: var(--text); border: 1px solid #3a4166; }
+  button.danger { background: var(--danger); }
+  .export-box { margin-top: 10px; display: none; }
+  .export-box textarea { min-height: 120px; font-family: ui-monospace, monospace; font-size: 0.75rem; }
+  .empty { color: var(--muted); font-size: 0.9rem; padding: 20px; text-align: center; }
+  .trade-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+  .trade-item {
+    background: var(--panel-2); border: 1px solid #3a4166; border-radius: 8px;
+    padding: 10px 12px; display: flex; justify-content: space-between; gap: 10px; align-items: flex-start;
+    font-size: 0.85rem;
+  }
+  .trade-item .txt { white-space: pre-wrap; word-break: break-word; flex: 1; }
+  footer { text-align: center; color: var(--muted); font-size: 0.75rem; padding: 20px; }
+  .sync-note {
+    background: rgba(108,92,231,0.1); border: 1px solid var(--accent);
+    border-radius: 8px; padding: 10px 14px; font-size: 0.8rem;
+    color: var(--muted); margin-bottom: 16px;
+  }
+  @media (max-width: 600px) {
+    header { flex-direction: column; align-items: flex-start; }
+    main { padding: 14px 14px 50px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>SPRITE <span>PLAZA</span></h1>
+    <div class="byline">Made by Midnight</div>
+  </div>
+  <div class="epic-status">
+    <div class="epic-dot" id="epicDot"></div>
+    <span class="byline" id="epicLabel">Not linked</span>
+    <button class="epic-btn" id="epicLoginBtn" onclick="startEpicLogin()">Link Epic Account</button>
+  </div>
+</header>
+
+<main>
+  <div class="sync-note" id="syncNote">
+    Manual tracker active. Link your Epic account to attempt auto-sync (requires valid Epic Developer credentials and an account not blocked by region restrictions).
+  </div>
+
+  <div class="tabs" id="seasonTabs"></div>
+
+  <div class="toolbar">
+    <input type="text" id="search" placeholder="Search sprites by name..." />
+    <select id="filterState">
+      <option value="all">All states</option>
+      <option value="owned">Owned</option>
+      <option value="mastered">Mastered</option>
+      <option value="missing">Missing</option>
+    </select>
+    <select id="filterRarity">
+      <option value="all">All rarities</option>
+      <option value="Rare">Rare</option>
+      <option value="Epic">Epic</option>
+      <option value="Legendary">Legendary</option>
+      <option value="Mythic">Mythic</option>
+    </select>
+    <button class="secondary" id="resetFilter">Reset filters</button>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span id="progressText">0 / 0 collected</span>
+      <span id="masteredText">0 mastered</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="emptyMsg" style="display:none;">No sprites match your filters.</div>
+
+  <div class="panel">
+    <h2>Export collection</h2>
+    <p class="hint">Save a text list of your current season's sprites.</p>
+    <div class="btn-row">
+      <button id="exportText">Export as text</button>
+      <button class="secondary" id="exportImage">Export as image (PNG)</button>
+    </div>
+    <div class="export-box" id="exportBox">
+      <textarea id="exportArea" readonly></textarea>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Trading Plaza</h2>
+    <p class="hint">Local wishlist / trade list. Saved only in your browser.</p>
+    <textarea id="tradeInput" placeholder="Example: Looking for Gold Zero Point. Offering Gummy Grim."></textarea>
+    <div class="btn-row">
+      <button id="addTrade">Add trade post</button>
+    </div>
+    <div class="trade-list" id="tradeList"></div>
+  </div>
+
+  <div class="panel">
+    <h2>Danger zone</h2>
+    <p class="hint">Clears all ticks, trade posts, and filters.</p>
+    <div class="btn-row">
+      <button class="danger" id="wipeAll">Wipe all data</button>
+    </div>
+  </div>
+</main>
+
+<footer>Sprite Plaza · fan-made tracker · not affiliated with Epic Games</footer>
+
+<script>
+/*
+  ============================================================
+  EPIC OAUTH CONFIG — REPLACE THESE VALUES
+  ============================================================
+  1. EPIC_CLIENT_ID: from Epic Developer Portal
+  2. SITE_URL: your Netlify site URL (no trailing slash)
+  3. REDIRECT_PATH: must match the Redirect URI in Epic Portal
+  ============================================================
+*/
+const EPIC_CLIENT_ID = "YOUR_CLIENT_ID";
+const SITE_URL = "https://YOUR-SITE.netlify.app";
+const REDIRECT_PATH = "/index.html"; // must match Epic Portal Redirect URI
+const EPIC_AUTH_URL = "https://www.epicgames.com/id/authorize";
+const EPIC_SCOPES = "basic_profile";
+
+/*
+  ============================================================
+  SPRITE DATA (Chapter 7 Season 3 — real names from sources)
+  ============================================================
+  Replace or extend these arrays as needed.
+  Each: { id, name, rarity }
+  ============================================================
+*/
+const SPRITE_DATA = {
+  current: [
+    // Chapter 7 Season 3 — Runners (real sprites from search results)
+    { id: "c7s3-water", name: "Water", rarity: "Rare" },
+    { id: "c7s3-earth", name: "Earth", rarity: "Rare" },
+    { id: "c7s3-fire", name: "Fire", rarity: "Rare" },
+    { id: "c7s3-fishy", name: "Fishy", rarity: "Rare" },
+    { id: "c7s3-air", name: "Air", rarity: "Rare" },
+    { id: "c7s3-duck", name: "Duck", rarity: "Epic" },
+    { id: "c7s3-ghost", name: "Ghost", rarity: "Epic" },
+    { id: "c7s3-demon", name: "Demon", rarity: "Epic" },
+    { id: "c7s3-king", name: "King", rarity: "Epic" },
+    { id: "c7s3-aura", name: "Aura", rarity: "Epic" },
+    { id: "c7s3-striker", name: "Striker", rarity: "Epic" },
+    { id: "c7s3-dream", name: "Dream", rarity: "Legendary" },
+    { id: "c7s3-punk", name: "Punk", rarity: "Legendary" },
+    { id: "c7s3-boss", name: "Boss", rarity: "Legendary" },
+    { id: "c7s3-seven", name: "Seven", rarity: "Legendary" },
+    { id: "c7s3-lootin", name: "Lootin' Llama", rarity: "Legendary" },
+    { id: "c7s3-zero", name: "Zero Point", rarity: "Mythic" },
+    { id: "c7s3-grim", name: "Grim", rarity: "Mythic" },
+    { id: "c7s3-batman", name: "Batman", rarity: "Mythic" },
+    { id: "c7s3-burnt", name: "Burnt Peanut", rarity: "Mythic" },
+    { id: "c7s3-vini", name: "Vini Jr.", rarity: "Mythic" },
+    { id: "c7s3-pollo", name: "Pollo", rarity: "Mythic" },
+  ],
+  last: [
+    // Placeholder — fill with Chapter 7 Season 2 / Mini-season sprites
+    { id: "last-01", name: "Halfpeel'd", rarity: "Rare" },
+    { id: "last-02", name: "Re-Pete", rarity: "Rare" },
+    { id: "last-03", name: "Barry O'Fish", rarity: "Rare" },
+    { id: "last-04", name: "Wayfinder", rarity: "Epic" },
+    { id: "last-05", name: "Chester", rarity: "Epic" },
+    { id: "last-06", name: "Lil' Flacko", rarity: "Legendary" },
+    { id: "last-07", name: "Plundarrgh", rarity: "Mythic" },
+    { id: "last-08", name: "Sweet Dreams", rarity: "Mythic" },
+  ],
+  twoBack: [
+    // Placeholder — fill with Chapter 7 Season 1 sprites
+    { id: "two-01", name: "Placeholder Sprite X", rarity: "Rare" },
+    { id: "two-02", name: "Placeholder Sprite Y", rarity: "Epic" },
+    { id: "two-03", name: "Placeholder Sprite Z", rarity: "Legendary" },
+  ]
+};
+
+const SEASON_LABELS = {
+  current: "Current Season (C7 S3)",
+  last: "Last Season (Mini)",
+  twoBack: "Two Seasons Ago"
+};
+
+const STORAGE_KEY = "spritePlaza.v2";
+
+let store = {
+  ticks: {},
+  trades: [],
+  activeSeason: "current"
+};
+
+/* ---------------- Epic OAuth ---------------- */
+function getEpicRedirectUri() {
+  return SITE_URL + REDIRECT_PATH;
+}
+
+function startEpicLogin() {
+  if (EPIC_CLIENT_ID === "YOUR_CLIENT_ID") {
+    alert("Set EPIC_CLIENT_ID in the script first.");
+    return;
+  }
+  const params = new URLSearchParams({
+    client_id: EPIC_CLIENT_ID,
+    response_type: "code",
+    scope: EPIC_SCOPES,
+    redirect_uri: getEpicRedirectUri()
+  });
+  window.location.href = EPIC_AUTH_URL + "?" + params.toString();
+}
+
+function handleEpicCallback() {
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get("code");
+  if (!code) return;
+
+  // Clean URL
+  window.history.replaceState({}, "", window.location.pathname);
+
+  document.getElementById("epicLabel").textContent = "Exchanging token...";
+  document.getElementById("epicDot").classList.add("on");
+
+  fetch("/.netlify/functions/epic-token", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ code })
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.access_token) {
+      sessionStorage.setItem("epic_access_token", data.access_token);
+      if (data.refresh_token) sessionStorage.setItem("epic_refresh_token", data.refresh_token);
+      document.getElementById("epicLabel").textContent = "Epic linked";
+      document.getElementById("syncNote").textContent =
+        "Epic account linked. Auto-sync requires a confirmed sprite inventory endpoint — manual ticks remain active.";
+      alert("Epic account linked! Token stored in session. Note: automatic sprite sync endpoint is not yet configured.");
+    } else {
+      throw new Error(data.error || "Token exchange failed");
+    }
+  })
+  .catch(err => {
+    console.error(err);
+    document.getElementById("epicLabel").textContent = "Link failed";
+    document.getElementById("epicDot").classList.remove("on");
+    alert("Epic login failed: " + err.message);
+  });
+}
+
+function updateEpicStatus() {
+  const token = sessionStorage.getItem("epic_access_token");
+  const dot = document.getElementById("epicDot");
+  const label = document.getElementById("epicLabel");
+  const btn = document.getElementById("epicLoginBtn");
+  if (token) {
+    dot.classList.add("on");
+    label.textContent = "Epic linked";
+    btn.textContent = "Re-link";
+    btn.classList.add("linked");
+  } else {
+    dot.classList.remove("on");
+    label.textContent = "Not linked";
+    btn.textContent = "Link Epic Account";
+    btn.classList.remove("linked");
+  }
+}
+
+/* ---------------- storage ---------------- */
+function loadStore() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const p = JSON.parse(raw);
+      store.ticks = p.ticks || {};
+      store.trades = p.trades || [];
+      store.activeSeason = p.activeSeason || "current";
+    }
+  } catch (e) { console.warn(e); }
+}
+
+function saveStore() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+  } catch (e) { console.warn(e); }
+}
+
+function getState(id) { return store.ticks[id] || "missing"; }
+
+function cycleState(id) {
+  const cur = getState(id);
+  if (cur === "missing") store.ticks[id] = "owned";
+  else if (cur === "owned") store.ticks[id] = "mastered";
+  else delete store.ticks[id];
+  saveStore();
+}
+
+function seasonSprites() { return SPRITE_DATA[store.activeSeason] || []; }
+
+function filteredSprites() {
+  const q = document.getElementById("search").value.trim().toLowerCase();
+  const fState = document.getElementById("filterState").value;
+  const fRarity = document.getElementById("filterRarity").value;
+  return seasonSprites().filter(s => {
+    if (q && !s.name.toLowerCase().includes(q)) return false;
+    if (fState !== "all" && getState(s.id) !== fState) return false;
+    if (fRarity !== "all" && s.rarity !== fRarity) return false;
+    return true;
+  });
+}
+
+/* ---------------- render ---------------- */
+function renderTabs() {
+  const wrap = document.getElementById("seasonTabs");
+  wrap.innerHTML = "";
+  Object.keys(SEASON_LABELS).forEach(key => {
+    const btn = document.createElement("button");
+    btn.className = "tab" + (store.activeSeason === key ? " active" : "");
+    btn.textContent = SEASON_LABELS[key];
+    btn.onclick = () => { store.activeSeason = key; saveStore(); renderAll(); };
+    wrap.appendChild(btn);
+  });
+}
+
+function renderGrid() {
+  const grid = document.getElementById("grid");
+  const empty = document.getElementById("emptyMsg");
+  const list = filteredSprites();
+  grid.innerHTML = "";
+  empty.style.display = list.length ? "none" : "block";
+
+  list.forEach(s => {
+    const state = getState(s.id);
+    const card = document.createElement("div");
+    card.className = "sprite";
+    card.dataset.state = state;
+    card.title = "Click: Missing → Owned → Mastered → Missing";
+
+    const thumb = document.createElement("div");
+    thumb.className = "thumb";
+    thumb.textContent = s.name.charAt(0).toUpperCase();
+
+    const name = document.createElement("div");
+    name.className = "name";
+    name.textContent = s.name;
+
+    const meta = document.createElement("div");
+    meta.className = "meta";
+    meta.textContent = s.rarity;
+
+    const badge = document.createElement("div");
+    badge.className = "badge";
+    badge.textContent = state === "missing" ? "Missing" : state === "owned" ? "Owned" : "Mastered";
+
+    card.appendChild(badge);
+    card.appendChild(thumb);
+    card.appendChild(name);
+    card.appendChild(meta);
+    card.onclick = () => { cycleState(s.id); renderAll(); };
+    grid.appendChild(card);
+  });
+}
+
+function renderProgress() {
+  const all = seasonSprites();
+  const owned = all.filter(s => getState(s.id) === "owned").length;
+  const mastered = all.filter(s => getState(s.id) === "mastered").length;
+  const total = all.length;
+  const collected = owned + mastered;
+  const pct = total ? (collected / total) * 100 : 0;
+  document.getElementById("progressText").textContent = `${collected} / ${total} collected`;
+  document.getElementById("masteredText").textContent = `${mastered} mastered`;
+  document.getElementById("progressFill").style.width = pct + "%";
+}
+
+function renderTrades() {
+  const wrap = document.getElementById("tradeList");
+  wrap.innerHTML = "";
+  if (!store.trades.length) {
+    const e = document.createElement("div");
+    e.className = "empty";
+    e.textContent = "No trade posts yet.";
+    wrap.appendChild(e);
+    return;
+  }
+  store.trades.forEach((text, idx) => {
+    const item = document.createElement("div");
+    item.className = "trade-item";
+    const txt = document.createElement("div");
+    txt.className = "txt";
+    txt.textContent = text;
+    const del = document.createElement("button");
+    del.className = "danger";
+    del.textContent = "Delete";
+    del.onclick = () => { store.trades.splice(idx, 1); saveStore(); renderTrades(); };
+    item.appendChild(txt);
+    item.appendChild(del);
+    wrap.appendChild(item);
+  });
+}
+
+function renderAll() {
+  renderTabs();
+  renderGrid();
+  renderProgress();
+  renderTrades();
+}
+
+/* ---------------- export ---------------- */
+function buildTextExport() {
+  const all = seasonSprites();
+  const groups = { owned: [], mastered: [], missing: [] };
+  all.forEach(s => groups[getState(s.id)].push(`${s.name} (${s.rarity})`));
+  const lines = [];
+  lines.push(`SPRITE PLAZA — ${SEASON_LABELS[store.activeSeason]}`);
+  lines.push(`Exported: ${new Date().toLocaleString()}`);
+  lines.push("");
+  ["owned", "mastered", "missing"].forEach(k => {
+    const label = k.charAt(0).toUpperCase() + k.slice(1);
+    lines.push(`== ${label} (${groups[k].length}) ==`);
+    if (groups[k].length) groups[k].forEach(n => lines.push(`- ${n}`));
+    else lines.push("(none)");
+    lines.push("");
+  });
+  return lines.join("\n");
+}
+
+function showTextExport() {
+  const box = document.getElementById("exportBox");
+  const area = document.getElementById("exportArea");
+  area.value = buildTextExport();
+  box.style.display = "block";
+  area.focus();
+  area.select();
+}
+
+function exportImage() {
+  const list = filteredSprites();
+  if (!list.length) { alert("Nothing to export."); return; }
+  const cols = 5, cell = 180, pad = 16, headerH = 70;
+  const rows = Math.ceil(list.length / cols);
+  const width = cols * cell + pad * 2;
+  const height = headerH + rows * cell + pad * 2;
+  const canvas = document.createElement("canvas");
+  canvas.width = width; canvas.height = height;
+  const ctx = canvas.getContext("2d");
+  ctx.fillStyle = "#0f1220"; ctx.fillRect(0, 0, width, height);
+  ctx.fillStyle = "#e8ecff"; ctx.font = "bold 26px system-ui, sans-serif";
+  ctx.fillText("SPRITE PLAZA", pad, 40);
+  ctx.fillStyle = "#8a93b8"; ctx.font = "14px system-ui, sans-serif";
+  ctx.fillText(`${SEASON_LABELS[store.activeSeason]} — ${new Date().toLocaleDateString()}`, pad, 60);
+  list.forEach((s, i) => {
+    const col = i % cols, row = Math.floor(i / cols);
+    const x = pad + col * cell, y = headerH + pad + row * cell;
+    const state = getState(s.id);
+    const color = state === "owned" ? "#2ecc71" : state === "mastered" ? "#f1c40f" : "#3a4166";
+    ctx.fillStyle = "#1a1f36"; ctx.strokeStyle = color; ctx.lineWidth = 3;
+    roundRect(ctx, x + 6, y + 6, cell - 12, cell - 12, 12); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = state === "missing" ? "#3a4166" : color + "33";
+    roundRect(ctx, x + 20, y + 20, cell - 40, 90, 10); ctx.fill();
+    ctx.fillStyle = "#ffffff"; ctx.font = "bold 42px system-ui, sans-serif"; ctx.textAlign = "center";
+    ctx.fillText(s.name.charAt(0).toUpperCase(), x + cell / 2, y + 80); ctx.textAlign = "left";
+    ctx.fillStyle = "#e8ecff"; ctx.font = "bold 13px system-ui, sans-serif";
+    wrapText(ctx, s.name, cell - 32).slice(0, 2).forEach((line, li) => ctx.fillText(line, x + 16, y + 132 + li * 16));
+    ctx.fillStyle = "#8a93b8"; ctx.font = "11px system-ui, sans-serif";
+    ctx.fillText(s.rarity, x + 16, y + 168);
+    const bt = state === "missing" ? "Missing" : state === "owned" ? "Owned" : "Mastered";
+    ctx.fillStyle = color; const bw = ctx.measureText(bt).width + 14;
+    roundRect(ctx, x + cell - bw - 14, y + 14, bw, 20, 10); ctx.fill();
+    ctx.fillStyle = state === "mastered" ? "#2b2000" : "#fff"; ctx.font = "bold 10px system-ui, sans-serif";
+    ctx.fillText(bt, x + cell - bw - 8, y + 28);
+  });
+  const link = document.createElement("a");
+  link.download = `sprite-plaza-${store.activeSeason}-${Date.now()}.png`;
+  link.href = canvas.toDataURL("image/png"); link.click();
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath(); ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
+}
+
+function wrapText(ctx, text, maxWidth) {
+  const words = text.split(" "); const lines = []; let cur = "";
+  words.forEach(w => {
+    const test = cur ? cur + " " + w : w;
+    if (ctx.measureText(test).width > maxWidth && cur) { lines.push(cur); cur = w; }
+    else cur = test;
+  });
+  if (cur) lines.push(cur); return lines;
+}
+
+/* ---------------- init ---------------- */
+function init() {
+  loadStore();
+  updateEpicStatus();
+  handleEpicCallback();
+  renderAll();
+
+  document.getElementById("search").addEventListener("input", renderGrid);
+  document.getElementById("filterState").addEventListener("change", renderGrid);
+  document.getElementById("filterRarity").addEventListener("change", renderGrid);
+  document.getElementById("resetFilter").addEventListener("click", () => {
+    document.getElementById("search").value = "";
+    document.getElementById("filterState").value = "all";
+    document.getElementById("filterRarity").value = "all";
+    renderGrid();
+  });
+  document.getElementById("exportText").addEventListener("click", showTextExport);
+  document.getElementById("exportImage").addEventListener("click", exportImage);
+  document.getElementById("addTrade").addEventListener("click", () => {
+    const input = document.getElementById("tradeInput");
+    const text = input.value.trim();
+    if (!text) return;
+    store.trades.unshift(text); saveStore(); input.value = ""; renderTrades();
+  });
+  document.getElementById("wipeAll").addEventListener("click", () => {
+    if (!confirm("Wipe all ticks, trades, and settings?")) return;
+    store = { ticks: {}, trades: [], activeSeason: "current" };
+    localStorage.removeItem(STORAGE_KEY); renderAll();
+    document.getElementById("exportBox").style.display = "none";
+  });
+}
+
+init();
+</script>
+</body>
+</html>
