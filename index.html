@@ -27,7 +27,7 @@
     min-height: 100vh;
   }
   header {
-    padding: 20px 24px;
+    padding: 18px 24px;
     background: linear-gradient(135deg, #1a1f36, #2a1f4d);
     border-bottom: 1px solid #2f3760;
     display: flex;
@@ -41,23 +41,32 @@
   .byline { color: var(--muted); font-size: 0.85rem; }
   .epic-status { display: flex; align-items: center; gap: 8px; }
   .epic-btn {
-    background: var(--epic);
-    color: #fff;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.85rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 6px;
+    background: var(--epic); color: #fff; border: none; padding: 8px 16px;
+    border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600;
   }
   .epic-btn:hover { filter: brightness(1.1); }
   .epic-btn.linked { background: #1a5c2e; }
   .epic-dot { width: 8px; height: 8px; border-radius: 50%; background: #666; }
   .epic-dot.on { background: #2ecc71; }
+
+  .section-tabs {
+    display: flex; gap: 4px; background: var(--panel);
+    border-bottom: 1px solid #2f3760; padding: 0 24px;
+    overflow-x: auto;
+  }
+  .section-tab {
+    padding: 14px 20px; border: none; background: transparent;
+    color: var(--muted); cursor: pointer; font-size: 0.9rem; font-weight: 600;
+    border-bottom: 3px solid transparent; transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .section-tab:hover { color: var(--text); }
+  .section-tab.active { color: var(--text); border-bottom-color: var(--accent); }
+
   main { padding: 20px 24px 60px; max-width: 1200px; margin: 0 auto; }
+  .section { display: none; }
+  .section.active { display: block; }
+
   .toolbar {
     display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
     background: var(--panel); padding: 14px; border-radius: 12px;
@@ -68,14 +77,14 @@
     padding: 8px 12px; border-radius: 8px; font-size: 0.9rem; outline: none;
   }
   .toolbar input[type="text"] { flex: 1 1 200px; min-width: 160px; }
-  .tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
-  .tab {
+  .season-tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  .season-tab {
     padding: 8px 16px; border-radius: 999px; border: 1px solid #3a4166;
     background: var(--panel); color: var(--muted); cursor: pointer;
     font-size: 0.9rem; transition: all 0.15s;
   }
-  .tab:hover { color: var(--text); border-color: var(--accent); }
-  .tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .season-tab:hover { color: var(--text); border-color: var(--accent); }
+  .season-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
   .progress-wrap {
     background: var(--panel); border: 1px solid #2f3760; border-radius: 12px;
     padding: 14px 18px; margin-bottom: 18px;
@@ -99,6 +108,7 @@
     background: var(--missing); display: flex; align-items: center; justify-content: center;
     font-size: 2rem; font-weight: bold; color: #aab2d8; overflow: hidden;
   }
+  .sprite .thumb img { width: 100%; height: 100%; object-fit: cover; }
   .sprite .name { font-size: 0.8rem; font-weight: 600; line-height: 1.2; }
   .sprite .meta { font-size: 0.7rem; color: var(--muted); }
   .sprite .badge {
@@ -118,36 +128,56 @@
   }
   .panel h2 { margin: 0 0 12px; font-size: 1.1rem; }
   .panel p.hint { color: var(--muted); font-size: 0.8rem; margin: 0 0 12px; }
-  textarea {
-    width: 100%; min-height: 90px; background: var(--panel-2); color: var(--text);
-    border: 1px solid #3a4166; border-radius: 8px; padding: 10px; font-size: 0.85rem;
-    font-family: inherit; resize: vertical;
-  }
   .btn-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
   button {
     background: var(--accent); color: #fff; border: none; padding: 9px 16px;
     border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600;
-    transition: filter 0.15s;
   }
   button:hover { filter: brightness(1.15); }
   button.secondary { background: var(--panel-2); color: var(--text); border: 1px solid #3a4166; }
   button.danger { background: var(--danger); }
   .export-box { margin-top: 10px; display: none; }
-  .export-box textarea { min-height: 120px; font-family: ui-monospace, monospace; font-size: 0.75rem; }
+  .export-box textarea {
+    width: 100%; min-height: 120px; background: var(--panel-2); color: var(--text);
+    border: 1px solid #3a4166; border-radius: 8px; padding: 10px;
+    font-family: ui-monospace, monospace; font-size: 0.75rem;
+  }
   .empty { color: var(--muted); font-size: 0.9rem; padding: 20px; text-align: center; }
-  .trade-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
-  .trade-item {
-    background: var(--panel-2); border: 1px solid #3a4166; border-radius: 8px;
-    padding: 10px 12px; display: flex; justify-content: space-between; gap: 10px; align-items: flex-start;
-    font-size: 0.85rem;
+
+  /* COMING SOON */
+  .coming-soon {
+    background: var(--panel); border: 1px dashed var(--accent); border-radius: 16px;
+    padding: 60px 24px; text-align: center; margin-top: 20px;
   }
-  .trade-item .txt { white-space: pre-wrap; word-break: break-word; flex: 1; }
+  .coming-soon h2 { margin: 0 0 12px; font-size: 1.6rem; }
+  .coming-soon p { color: var(--muted); font-size: 0.95rem; max-width: 500px; margin: 0 auto; line-height: 1.5; }
+
+  /* PROFILE */
+  .profile-card {
+    background: var(--panel); border: 1px solid #2f3760; border-radius: 16px;
+    padding: 24px; margin-top: 20px;
+  }
+  .profile-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+  .profile-avatar {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), #a29bfe);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; font-weight: bold; color: #fff;
+  }
+  .profile-name { font-size: 1.2rem; font-weight: 700; }
+  .profile-sub { color: var(--muted); font-size: 0.85rem; }
+  .profile-stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px; margin-top: 16px;
+  }
+  .stat-box {
+    background: var(--panel-2); border: 1px solid #3a4166; border-radius: 10px;
+    padding: 14px; text-align: center;
+  }
+  .stat-box .num { font-size: 1.4rem; font-weight: 700; color: var(--accent); }
+  .stat-box .lbl { font-size: 0.75rem; color: var(--muted); margin-top: 4px; }
+
   footer { text-align: center; color: var(--muted); font-size: 0.75rem; padding: 20px; }
-  .sync-note {
-    background: rgba(108,92,231,0.1); border: 1px solid var(--accent);
-    border-radius: 8px; padding: 10px 14px; font-size: 0.8rem;
-    color: var(--muted); margin-bottom: 16px;
-  }
   @media (max-width: 600px) {
     header { flex-direction: column; align-items: flex-start; }
     main { padding: 14px 14px 50px; }
@@ -167,71 +197,101 @@
   </div>
 </header>
 
+<nav class="section-tabs">
+  <button class="section-tab active" data-section="sprite-plaza">Sprite Plaza</button>
+  <button class="section-tab" data-section="trading-plaza">Trading Plaza</button>
+  <button class="section-tab" data-section="profile">Profile</button>
+</nav>
+
 <main>
-  <div class="sync-note" id="syncNote">
-    Manual tracker active. Link your Epic account to attempt auto-sync (requires valid Epic Developer credentials and an account not blocked by region restrictions).
-  </div>
+  <!-- ============ SPRITE PLAZA ============ -->
+  <section class="section active" id="sprite-plaza">
+    <div class="season-tabs" id="seasonTabs"></div>
 
-  <div class="tabs" id="seasonTabs"></div>
-
-  <div class="toolbar">
-    <input type="text" id="search" placeholder="Search sprites by name..." />
-    <select id="filterState">
-      <option value="all">All states</option>
-      <option value="owned">Owned</option>
-      <option value="mastered">Mastered</option>
-      <option value="missing">Missing</option>
-    </select>
-    <select id="filterRarity">
-      <option value="all">All rarities</option>
-      <option value="Rare">Rare</option>
-      <option value="Epic">Epic</option>
-      <option value="Legendary">Legendary</option>
-      <option value="Mythic">Mythic</option>
-    </select>
-    <button class="secondary" id="resetFilter">Reset filters</button>
-  </div>
-
-  <div class="progress-wrap">
-    <div class="progress-label">
-      <span id="progressText">0 / 0 collected</span>
-      <span id="masteredText">0 mastered</span>
+    <div class="toolbar">
+      <input type="text" id="search" placeholder="Search sprites by name..." />
+      <select id="filterState">
+        <option value="all">All states</option>
+        <option value="owned">Owned</option>
+        <option value="mastered">Mastered</option>
+        <option value="missing">Missing</option>
+      </select>
+      <select id="filterRarity">
+        <option value="all">All rarities</option>
+        <option value="Rare">Rare</option>
+        <option value="Epic">Epic</option>
+        <option value="Legendary">Legendary</option>
+        <option value="Mythic">Mythic</option>
+      </select>
+      <button class="secondary" id="resetFilter">Reset filters</button>
     </div>
-    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-  </div>
 
-  <div class="grid" id="grid"></div>
-  <div class="empty" id="emptyMsg" style="display:none;">No sprites match your filters.</div>
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span id="progressText">0 / 0 collected</span>
+        <span id="masteredText">0 mastered</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
 
-  <div class="panel">
-    <h2>Export collection</h2>
-    <p class="hint">Save a text list of your current season's sprites.</p>
-    <div class="btn-row">
-      <button id="exportText">Export as text</button>
-      <button class="secondary" id="exportImage">Export as image (PNG)</button>
-    </div>
-    <div class="export-box" id="exportBox">
-      <textarea id="exportArea" readonly></textarea>
-    </div>
-  </div>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="emptyMsg" style="display:none;">No sprites match your filters.</div>
 
-  <div class="panel">
-    <h2>Trading Plaza</h2>
-    <p class="hint">Local wishlist / trade list. Saved only in your browser.</p>
-    <textarea id="tradeInput" placeholder="Example: Looking for Gold Zero Point. Offering Gummy Grim."></textarea>
-    <div class="btn-row">
-      <button id="addTrade">Add trade post</button>
+    <div class="panel">
+      <h2>Export collection</h2>
+      <p class="hint">Save a text list or PNG image of your current season's sprites.</p>
+      <div class="btn-row">
+        <button id="exportText">Export as text</button>
+        <button class="secondary" id="exportImage">Export as image (PNG)</button>
+      </div>
+      <div class="export-box" id="exportBox">
+        <textarea id="exportArea" readonly></textarea>
+      </div>
     </div>
-    <div class="trade-list" id="tradeList"></div>
-  </div>
 
-  <div class="panel">
-    <h2>Danger zone</h2>
-    <p class="hint">Clears all ticks, trade posts, and filters.</p>
-    <div class="btn-row">
-      <button class="danger" id="wipeAll">Wipe all data</button>
+    <div class="panel">
+      <h2>Danger zone</h2>
+      <p class="hint">Clears all ticks and saved settings.</p>
+      <div class="btn-row">
+        <button class="danger" id="wipeAll">Wipe all data</button>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <!-- ============ TRADING PLAZA ============ -->
+  <section class="section" id="trading-plaza">
+    <div class="coming-soon">
+      <h2>🚧 Coming Soon</h2>
+      <p>The Trading Plaza is currently under construction. Soon you'll be able to list sprites you want and sprites you're offering to trade.</p>
+    </div>
+  </section>
+
+  <!-- ============ PROFILE ============ -->
+  <section class="section" id="profile">
+    <div class="profile-card">
+      <div class="profile-header">
+        <div class="profile-avatar">M</div>
+        <div>
+          <div class="profile-name">Midnight</div>
+          <div class="profile-sub" id="profileEpicStatus">Epic account not linked</div>
+        </div>
+      </div>
+      <div class="profile-stats">
+        <div class="stat-box">
+          <div class="num" id="profileCollected">0</div>
+          <div class="lbl">Collected</div>
+        </div>
+        <div class="stat-box">
+          <div class="num" id="profileMastered">0</div>
+          <div class="lbl">Mastered</div>
+        </div>
+        <div class="stat-box">
+          <div class="num" id="profileTotal">0</div>
+          <div class="lbl">Total Sprites</div>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
 
 <footer>Sprite Plaza · fan-made tracker · not affiliated with Epic Games</footer>
@@ -241,88 +301,73 @@
   ============================================================
   EPIC OAUTH CONFIG — REPLACE THESE VALUES
   ============================================================
-  1. EPIC_CLIENT_ID: from Epic Developer Portal
-  2. SITE_URL: your Netlify site URL (no trailing slash)
-  3. REDIRECT_PATH: must match the Redirect URI in Epic Portal
-  ============================================================
 */
 const EPIC_CLIENT_ID = "YOUR_CLIENT_ID";
 const SITE_URL = "https://YOUR-SITE.netlify.app";
-const REDIRECT_PATH = "/index.html"; // must match Epic Portal Redirect URI
+const REDIRECT_PATH = "/index.html";
 const EPIC_AUTH_URL = "https://www.epicgames.com/id/authorize";
 const EPIC_SCOPES = "basic_profile";
 
 /*
   ============================================================
-  SPRITE DATA (Chapter 7 Season 3 — real names from sources)
+  SPRITE DATA
   ============================================================
-  Replace or extend these arrays as needed.
-  Each: { id, name, rarity }
+  Reorder: Mini Season (newest), C7S4, C7S3.
+  Add image URLs to the "image" field when you have them.
   ============================================================
 */
 const SPRITE_DATA = {
-  current: [
-    // Chapter 7 Season 3 — Runners (real sprites from search results)
-    { id: "c7s3-water", name: "Water", rarity: "Rare" },
-    { id: "c7s3-earth", name: "Earth", rarity: "Rare" },
-    { id: "c7s3-fire", name: "Fire", rarity: "Rare" },
-    { id: "c7s3-fishy", name: "Fishy", rarity: "Rare" },
-    { id: "c7s3-air", name: "Air", rarity: "Rare" },
-    { id: "c7s3-duck", name: "Duck", rarity: "Epic" },
-    { id: "c7s3-ghost", name: "Ghost", rarity: "Epic" },
-    { id: "c7s3-demon", name: "Demon", rarity: "Epic" },
-    { id: "c7s3-king", name: "King", rarity: "Epic" },
-    { id: "c7s3-aura", name: "Aura", rarity: "Epic" },
-    { id: "c7s3-striker", name: "Striker", rarity: "Epic" },
-    { id: "c7s3-dream", name: "Dream", rarity: "Legendary" },
-    { id: "c7s3-punk", name: "Punk", rarity: "Legendary" },
-    { id: "c7s3-boss", name: "Boss", rarity: "Legendary" },
-    { id: "c7s3-seven", name: "Seven", rarity: "Legendary" },
-    { id: "c7s3-lootin", name: "Lootin' Llama", rarity: "Legendary" },
-    { id: "c7s3-zero", name: "Zero Point", rarity: "Mythic" },
-    { id: "c7s3-grim", name: "Grim", rarity: "Mythic" },
-    { id: "c7s3-batman", name: "Batman", rarity: "Mythic" },
-    { id: "c7s3-burnt", name: "Burnt Peanut", rarity: "Mythic" },
-    { id: "c7s3-vini", name: "Vini Jr.", rarity: "Mythic" },
-    { id: "c7s3-pollo", name: "Pollo", rarity: "Mythic" },
+  mini: [
+    // Mini Season — newest. Placeholder names, replace with real ones.
+    { id: "mini-01", name: "Placeholder Mini 1", rarity: "Rare", image: "" },
+    { id: "mini-02", name: "Placeholder Mini 2", rarity: "Epic", image: "" },
+    { id: "mini-03", name: "Placeholder Mini 3", rarity: "Legendary", image: "" },
   ],
-  last: [
-    // Placeholder — fill with Chapter 7 Season 2 / Mini-season sprites
-    { id: "last-01", name: "Halfpeel'd", rarity: "Rare" },
-    { id: "last-02", name: "Re-Pete", rarity: "Rare" },
-    { id: "last-03", name: "Barry O'Fish", rarity: "Rare" },
-    { id: "last-04", name: "Wayfinder", rarity: "Epic" },
-    { id: "last-05", name: "Chester", rarity: "Epic" },
-    { id: "last-06", name: "Lil' Flacko", rarity: "Legendary" },
-    { id: "last-07", name: "Plundarrgh", rarity: "Mythic" },
-    { id: "last-08", name: "Sweet Dreams", rarity: "Mythic" },
+  c7s4: [
+    // Chapter 7 Season 4 — placeholder
+    { id: "c7s4-01", name: "Placeholder C7S4 1", rarity: "Rare", image: "" },
+    { id: "c7s4-02", name: "Placeholder C7S4 2", rarity: "Epic", image: "" },
+    { id: "c7s4-03", name: "Placeholder C7S4 3", rarity: "Legendary", image: "" },
   ],
-  twoBack: [
-    // Placeholder — fill with Chapter 7 Season 1 sprites
-    { id: "two-01", name: "Placeholder Sprite X", rarity: "Rare" },
-    { id: "two-02", name: "Placeholder Sprite Y", rarity: "Epic" },
-    { id: "two-03", name: "Placeholder Sprite Z", rarity: "Legendary" },
+  c7s3: [
+    // Chapter 7 Season 3 — Runners (real names from sources)
+    { id: "c7s3-water", name: "Water", rarity: "Rare", image: "" },
+    { id: "c7s3-earth", name: "Earth", rarity: "Rare", image: "" },
+    { id: "c7s3-fire", name: "Fire", rarity: "Rare", image: "" },
+    { id: "c7s3-fishy", name: "Fishy", rarity: "Rare", image: "" },
+    { id: "c7s3-air", name: "Air", rarity: "Rare", image: "" },
+    { id: "c7s3-duck", name: "Duck", rarity: "Epic", image: "" },
+    { id: "c7s3-ghost", name: "Ghost", rarity: "Epic", image: "" },
+    { id: "c7s3-demon", name: "Demon", rarity: "Epic", image: "" },
+    { id: "c7s3-king", name: "King", rarity: "Epic", image: "" },
+    { id: "c7s3-aura", name: "Aura", rarity: "Epic", image: "" },
+    { id: "c7s3-striker", name: "Striker", rarity: "Epic", image: "" },
+    { id: "c7s3-dream", name: "Dream", rarity: "Legendary", image: "" },
+    { id: "c7s3-punk", name: "Punk", rarity: "Legendary", image: "" },
+    { id: "c7s3-boss", name: "Boss", rarity: "Legendary", image: "" },
+    { id: "c7s3-seven", name: "Seven", rarity: "Legendary", image: "" },
+    { id: "c7s3-lootin", name: "Lootin' Llama", rarity: "Legendary", image: "" },
+    { id: "c7s3-zero", name: "Zero Point", rarity: "Mythic", image: "" },
+    { id: "c7s3-grim", name: "Grim", rarity: "Mythic", image: "" },
+    { id: "c7s3-batman", name: "Batman", rarity: "Mythic", image: "" },
+    { id: "c7s3-burnt", name: "Burnt Peanut", rarity: "Mythic", image: "" },
+    { id: "c7s3-vini", name: "Vini Jr.", rarity: "Mythic", image: "" },
+    { id: "c7s3-pollo", name: "Pollo", rarity: "Mythic", image: "" },
   ]
 };
 
 const SEASON_LABELS = {
-  current: "Current Season (C7 S3)",
-  last: "Last Season (Mini)",
-  twoBack: "Two Seasons Ago"
+  mini: "Mini Season",
+  c7s4: "Chapter 7 Season 4",
+  c7s3: "Chapter 7 Season 3"
 };
 
-const STORAGE_KEY = "spritePlaza.v2";
+const STORAGE_KEY = "spritePlaza.v3";
 
-let store = {
-  ticks: {},
-  trades: [],
-  activeSeason: "current"
-};
+let store = { ticks: {}, activeSeason: "mini" };
 
 /* ---------------- Epic OAuth ---------------- */
-function getEpicRedirectUri() {
-  return SITE_URL + REDIRECT_PATH;
-}
+function getEpicRedirectUri() { return SITE_URL + REDIRECT_PATH; }
 
 function startEpicLogin() {
   if (EPIC_CLIENT_ID === "YOUR_CLIENT_ID") {
@@ -342,13 +387,9 @@ function handleEpicCallback() {
   const params = new URLSearchParams(window.location.search);
   const code = params.get("code");
   if (!code) return;
-
-  // Clean URL
   window.history.replaceState({}, "", window.location.pathname);
-
   document.getElementById("epicLabel").textContent = "Exchanging token...";
   document.getElementById("epicDot").classList.add("on");
-
   fetch("/.netlify/functions/epic-token", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -360,9 +401,9 @@ function handleEpicCallback() {
       sessionStorage.setItem("epic_access_token", data.access_token);
       if (data.refresh_token) sessionStorage.setItem("epic_refresh_token", data.refresh_token);
       document.getElementById("epicLabel").textContent = "Epic linked";
-      document.getElementById("syncNote").textContent =
-        "Epic account linked. Auto-sync requires a confirmed sprite inventory endpoint — manual ticks remain active.";
-      alert("Epic account linked! Token stored in session. Note: automatic sprite sync endpoint is not yet configured.");
+      document.getElementById("profileEpicStatus").textContent = "Epic account linked";
+      updateProfileStats();
+      alert("Epic account linked!");
     } else {
       throw new Error(data.error || "Token exchange failed");
     }
@@ -385,11 +426,13 @@ function updateEpicStatus() {
     label.textContent = "Epic linked";
     btn.textContent = "Re-link";
     btn.classList.add("linked");
+    document.getElementById("profileEpicStatus").textContent = "Epic account linked";
   } else {
     dot.classList.remove("on");
     label.textContent = "Not linked";
     btn.textContent = "Link Epic Account";
     btn.classList.remove("linked");
+    document.getElementById("profileEpicStatus").textContent = "Epic account not linked";
   }
 }
 
@@ -400,20 +443,15 @@ function loadStore() {
     if (raw) {
       const p = JSON.parse(raw);
       store.ticks = p.ticks || {};
-      store.trades = p.trades || [];
-      store.activeSeason = p.activeSeason || "current";
+      store.activeSeason = p.activeSeason || "mini";
     }
   } catch (e) { console.warn(e); }
 }
-
 function saveStore() {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
-  } catch (e) { console.warn(e); }
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(store)); }
+  catch (e) { console.warn(e); }
 }
-
 function getState(id) { return store.ticks[id] || "missing"; }
-
 function cycleState(id) {
   const cur = getState(id);
   if (cur === "missing") store.ticks[id] = "owned";
@@ -421,7 +459,6 @@ function cycleState(id) {
   else delete store.ticks[id];
   saveStore();
 }
-
 function seasonSprites() { return SPRITE_DATA[store.activeSeason] || []; }
 
 function filteredSprites() {
@@ -437,12 +474,12 @@ function filteredSprites() {
 }
 
 /* ---------------- render ---------------- */
-function renderTabs() {
+function renderSeasonTabs() {
   const wrap = document.getElementById("seasonTabs");
   wrap.innerHTML = "";
   Object.keys(SEASON_LABELS).forEach(key => {
     const btn = document.createElement("button");
-    btn.className = "tab" + (store.activeSeason === key ? " active" : "");
+    btn.className = "season-tab" + (store.activeSeason === key ? " active" : "");
     btn.textContent = SEASON_LABELS[key];
     btn.onclick = () => { store.activeSeason = key; saveStore(); renderAll(); };
     wrap.appendChild(btn);
@@ -465,7 +502,15 @@ function renderGrid() {
 
     const thumb = document.createElement("div");
     thumb.className = "thumb";
-    thumb.textContent = s.name.charAt(0).toUpperCase();
+    if (s.image) {
+      const img = document.createElement("img");
+      img.src = s.image;
+      img.alt = s.name;
+      img.onerror = () => { img.remove(); thumb.textContent = s.name.charAt(0).toUpperCase(); };
+      thumb.appendChild(img);
+    } else {
+      thumb.textContent = s.name.charAt(0).toUpperCase();
+    }
 
     const name = document.createElement("div");
     name.className = "name";
@@ -500,37 +545,26 @@ function renderProgress() {
   document.getElementById("progressFill").style.width = pct + "%";
 }
 
-function renderTrades() {
-  const wrap = document.getElementById("tradeList");
-  wrap.innerHTML = "";
-  if (!store.trades.length) {
-    const e = document.createElement("div");
-    e.className = "empty";
-    e.textContent = "No trade posts yet.";
-    wrap.appendChild(e);
-    return;
-  }
-  store.trades.forEach((text, idx) => {
-    const item = document.createElement("div");
-    item.className = "trade-item";
-    const txt = document.createElement("div");
-    txt.className = "txt";
-    txt.textContent = text;
-    const del = document.createElement("button");
-    del.className = "danger";
-    del.textContent = "Delete";
-    del.onclick = () => { store.trades.splice(idx, 1); saveStore(); renderTrades(); };
-    item.appendChild(txt);
-    item.appendChild(del);
-    wrap.appendChild(item);
+function updateProfileStats() {
+  let collected = 0, mastered = 0, total = 0;
+  Object.keys(SPRITE_DATA).forEach(k => {
+    SPRITE_DATA[k].forEach(s => {
+      total++;
+      const st = getState(s.id);
+      if (st === "owned") collected++;
+      if (st === "mastered") mastered++;
+    });
   });
+  document.getElementById("profileCollected").textContent = collected;
+  document.getElementById("profileMastered").textContent = mastered;
+  document.getElementById("profileTotal").textContent = total;
 }
 
 function renderAll() {
-  renderTabs();
+  renderSeasonTabs();
   renderGrid();
   renderProgress();
-  renderTrades();
+  updateProfileStats();
 }
 
 /* ---------------- export ---------------- */
@@ -607,7 +641,6 @@ function roundRect(ctx, x, y, w, h, r) {
   ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);
   ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
 }
-
 function wrapText(ctx, text, maxWidth) {
   const words = text.split(" "); const lines = []; let cur = "";
   words.forEach(w => {
@@ -618,12 +651,25 @@ function wrapText(ctx, text, maxWidth) {
   if (cur) lines.push(cur); return lines;
 }
 
+/* ---------------- section switching ---------------- */
+function initSections() {
+  document.querySelectorAll(".section-tab").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".section-tab").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+      btn.classList.add("active");
+      document.getElementById(btn.dataset.section).classList.add("active");
+    });
+  });
+}
+
 /* ---------------- init ---------------- */
 function init() {
   loadStore();
   updateEpicStatus();
   handleEpicCallback();
   renderAll();
+  initSections();
 
   document.getElementById("search").addEventListener("input", renderGrid);
   document.getElementById("filterState").addEventListener("change", renderGrid);
@@ -636,16 +682,11 @@ function init() {
   });
   document.getElementById("exportText").addEventListener("click", showTextExport);
   document.getElementById("exportImage").addEventListener("click", exportImage);
-  document.getElementById("addTrade").addEventListener("click", () => {
-    const input = document.getElementById("tradeInput");
-    const text = input.value.trim();
-    if (!text) return;
-    store.trades.unshift(text); saveStore(); input.value = ""; renderTrades();
-  });
   document.getElementById("wipeAll").addEventListener("click", () => {
-    if (!confirm("Wipe all ticks, trades, and settings?")) return;
-    store = { ticks: {}, trades: [], activeSeason: "current" };
-    localStorage.removeItem(STORAGE_KEY); renderAll();
+    if (!confirm("Wipe all ticks and settings?")) return;
+    store = { ticks: {}, activeSeason: "mini" };
+    localStorage.removeItem(STORAGE_KEY);
+    renderAll();
     document.getElementById("exportBox").style.display = "none";
   });
 }
