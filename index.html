@@ -8,168 +8,60 @@
   :root {
     --bg: #0B0914;
     --card-bg: #161125;
-    --card-hover: #1E1832;
     --text: #FFFFFF;
     --text-muted: #9A8FBC;
     --purple: #8B5CF6;
-    --purple-dark: #6D28D9;
     --purple-light: #A78BFA;
     --border: #2A2144;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    padding-bottom: 80px;
-  }
-
-  /* HEADER */
-  header {
-    padding: 16px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .logo-container {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  /* Site Logo Image */
-  .logo-img {
-    width: 36px;
-    height: 36px;
-    object-fit: contain;
-  }
-  .logo-text {
-    font-size: 1.2rem;
-    font-weight: 900;
-    line-height: 1;
-    font-style: italic;
-    text-transform: uppercase;
-    letter-spacing: -0.5px;
-  }
+  body { font-family: -apple-system, sans-serif; background: var(--bg); color: var(--text); padding-bottom: 80px; }
+  
+  header { padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; }
+  .logo-container { display: flex; align-items: center; gap: 12px; }
+  .logo-text { font-size: 1.2rem; font-weight: 900; font-style: italic; text-transform: uppercase; line-height: 1; }
   .logo-text span { color: var(--purple); display: block; }
-  .header-actions { display: flex; gap: 10px; }
-  .icon-btn {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border);
-    color: var(--text);
-    width: 40px; height: 40px;
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer;
-  }
 
-  /* SECTIONS */
   .section { display: none; padding: 0 20px; }
   .section.active { display: block; }
 
-  /* HERO BANNER */
-  .hero {
-    /* Looks for your custom banner image, with a purple fallback if it fails */
-    background: linear-gradient(135deg, rgba(109, 40, 217, 0.9) 0%, rgba(139, 92, 246, 0.7) 100%), url('images/banner.webp') center/cover;
-    background-color: #2A1B54;
-    border-radius: 24px;
-    padding: 24px;
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 20px;
-    border: 1px solid rgba(139, 92, 246, 0.3);
-  }
-  .hero h1 {
-    font-size: 2.2rem;
-    font-weight: 900;
-    font-style: italic;
-    text-transform: uppercase;
-    line-height: 0.9;
-    letter-spacing: -1px;
-    margin-bottom: 8px;
-  }
-  .hero h1 span { color: var(--purple-light); }
-  .hero p { font-size: 0.85rem; color: #E2D9FF; max-width: 60%; margin-bottom: 16px; line-height: 1.3; }
-  .hero-btn {
-    background: var(--purple);
-    color: #fff;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  /* MENU CARDS */
-  .menu-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 24px;
-  }
-  .menu-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 16px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .menu-card:hover { background: var(--card-hover); }
-  .menu-card .icon {
-    background: rgba(139, 92, 246, 0.15);
-    color: var(--purple);
-    width: 36px; height: 36px;
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 12px;
-  }
-  .menu-card .icon svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  /* HOME MENU */
+  .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
+  .menu-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 16px; cursor: pointer; }
   .menu-card h3 { font-size: 1rem; margin-bottom: 4px; }
-  .menu-card p { font-size: 0.75rem; color: var(--text-muted); line-height: 1.2; }
   
-  /* Arrow Icon Fix */
-  .menu-card .arrow {
-    position: absolute;
-    bottom: 16px; right: 16px;
-    background: rgba(255, 255, 255, 0.08);
-    width: 26px; height: 26px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--text-muted);
+  /* SPRITE PLAZA */
+  .season-tabs { display: flex; gap: 8px; margin-bottom: 16px; overflow-x: auto; }
+  .season-tab {
+    background: var(--card-bg); border: 1px solid var(--border);
+    color: var(--text-muted); padding: 8px 16px; border-radius: 12px;
+    font-size: 0.8rem; font-weight: 600; cursor: pointer; white-space: nowrap;
   }
-  .menu-card .arrow svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+  .season-tab.active { background: var(--purple); color: #fff; border-color: var(--purple); }
 
-  /* FEATURED */
-  .section-header {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 12px;
-  }
-  .section-header h2 { font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
-  .section-header h2::before {
-    content: ''; display: block; width: 4px; height: 16px;
-    background: var(--purple); border-radius: 2px;
-  }
-  .view-all { color: var(--purple-light); font-size: 0.8rem; text-decoration: none; font-weight: 600; cursor: pointer; }
+  .sprite-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; }
+  .sprite-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 12px; display: flex; align-items: center; gap: 14px; }
   
-  .featured-row {
-    display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px;
+  .sprite-img {
+    width: 56px; height: 56px; border-radius: 12px;
+    background: rgba(255,255,255,0.05); object-fit: contain; padding: 4px; flex-shrink: 0;
   }
-  .featured-row::-webkit-scrollbar { display: none; }
-  .featured-item {
-    min-width: 90px; height: 90px;
-    border-radius: 16px;
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
+  .sprite-info { flex: 1; }
+  .sprite-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+  .variants-row { display: flex; gap: 6px; flex-wrap: wrap; }
+  .v-btn {
+    width: 24px; height: 24px; border-radius: 50%;
+    border: 2px solid var(--border); background: var(--bg);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    padding: 2px; position: relative;
   }
-  .featured-item img { width: 80%; height: 80%; object-fit: contain; }
+  .v-btn img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
+  .v-btn[data-state="owned"] { border-color: #22c55e; }
+  .v-btn[data-state="mastered"] { border-color: #eab308; }
+  .v-btn[data-state="missing"] { opacity: 0.4; filter: grayscale(100%); }
+
+  /* COMING SOON */
+  .coming-soon { text-align: center; padding: 60px 20px; background: var(--card-bg); border-radius: 24px; border: 1px dashed var(--purple); margin-top: 20px; }
 
   /* BOTTOM NAV */
   .bottom-nav {
@@ -182,219 +74,40 @@
   }
   .nav-item {
     display: flex; flex-direction: column; align-items: center; gap: 4px;
-    color: var(--text-muted); font-size: 0.7rem; font-weight: 600;
-    cursor: pointer; background: none; border: none;
-    transition: color 0.15s;
+    color: var(--text-muted); font-size: 0.65rem; font-weight: 600;
+    cursor: pointer; background: none; border: none; transition: color 0.15s;
   }
   .nav-item.active { color: var(--purple); }
-  .nav-item svg { width: 22px; height: 22px; fill: currentColor; }
-
-  /* SPRITE LIST */
-  .toolbar {
-    display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;
-  }
-  .toolbar input, .toolbar select {
-    background: var(--card-bg); border: 1px solid var(--border);
-    color: var(--text); padding: 10px 14px; border-radius: 12px;
-    font-size: 0.85rem; outline: none; flex: 1;
-  }
-  .season-tabs { display: flex; gap: 8px; margin-bottom: 16px; overflow-x: auto; }
-  .season-tab {
-    background: var(--card-bg); border: 1px solid var(--border);
-    color: var(--text-muted); padding: 8px 16px; border-radius: 12px;
-    font-size: 0.8rem; font-weight: 600; cursor: pointer; white-space: nowrap;
-  }
-  .season-tab.active { background: var(--purple); color: #fff; border-color: var(--purple); }
-  
-  .progress-bar-container {
-    background: var(--card-bg); border: 1px solid var(--border);
-    padding: 14px; border-radius: 16px; margin-bottom: 20px;
-  }
-  .progress-text { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 8px; }
-  .progress-track { background: var(--border); height: 8px; border-radius: 4px; overflow: hidden; }
-  .progress-fill { background: var(--purple); height: 100%; width: 0%; transition: width 0.3s; }
-
-  .sprite-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; }
-  .sprite-card {
-    background: var(--card-bg); border: 1px solid var(--border);
-    border-radius: 16px; padding: 12px; display: flex; align-items: center; gap: 14px;
-  }
-  .sprite-img {
-    width: 56px; height: 56px; border-radius: 12px;
-    background: rgba(255,255,255,0.05); object-fit: contain; padding: 4px; flex-shrink: 0;
-  }
-  .sprite-info { flex: 1; }
-  .sprite-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
-  
-  /* VARIANT BUTTONS */
-  .variants-row { display: flex; gap: 6px; flex-wrap: wrap; }
-  .v-btn {
-    width: 24px; height: 24px; border-radius: 50%;
-    border: 2px solid var(--border); background: var(--bg);
-    cursor: pointer; display: flex; align-items: center; justify-content: center;
-    transition: all 0.15s; position: relative; padding: 2px;
-  }
-  .v-btn img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
-  
-  .v-btn::after {
-    content: attr(data-label); position: absolute; bottom: -24px; left: 50%; transform: translateX(-50%);
-    background: #000; color: #fff; font-size: 0.6rem; padding: 2px 6px;
-    border-radius: 4px; white-space: nowrap; opacity: 0; pointer-events: none; z-index: 10;
-    text-transform: capitalize;
-  }
-  .v-btn:hover::after { opacity: 1; }
-  
-  /* Variant States */
-  .v-btn[data-state="owned"] { border-color: #22c55e; box-shadow: 0 0 8px rgba(34, 197, 94, 0.4); }
-  .v-btn[data-state="mastered"] { border-color: #eab308; box-shadow: 0 0 8px rgba(234, 179, 8, 0.4); }
-  .v-btn[data-state="missing"] { opacity: 0.4; filter: grayscale(100%); }
-  .v-btn:hover { opacity: 1; filter: grayscale(0%); transform: scale(1.1); }
-
-  .panel {
-    background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px;
-    padding: 16px; margin-top: 24px;
-  }
-  .btn { background: var(--purple); color: #fff; border: none; padding: 10px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; }
-  .btn.danger { background: #ef4444; }
-  .export-box textarea {
-    width: 100%; min-height: 120px; background: #000; color: #fff;
-    border: 1px solid var(--border); border-radius: 8px; padding: 10px;
-    font-family: monospace; font-size: 0.75rem; margin-top: 10px; display: none;
-  }
-
-  .coming-soon {
-    text-align: center; padding: 60px 20px; background: var(--card-bg);
-    border-radius: 24px; border: 1px dashed var(--purple); margin-top: 20px;
-  }
-  .coming-soon h2 { color: var(--purple); margin-bottom: 8px; }
-
-  .profile-header {
-    display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
-    background: var(--card-bg); padding: 20px; border-radius: 20px; border: 1px solid var(--border);
-  }
-  .profile-avatar {
-    width: 64px; height: 64px; border-radius: 50%; background: var(--purple);
-    display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 900;
-  }
-  .profile-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-  .stat-card {
-    background: var(--card-bg); border: 1px solid var(--border);
-    padding: 16px; border-radius: 16px; text-align: center;
-  }
-  .stat-card .num { font-size: 1.4rem; font-weight: 800; color: var(--purple-light); }
-  .stat-card .lbl { font-size: 0.7rem; color: var(--text-muted); margin-top: 4px; text-transform: uppercase; }
+  .nav-item svg { width: 20px; height: 20px; fill: currentColor; }
 </style>
 </head>
 <body>
 
 <header>
   <div class="logo-container">
-    <!-- Put your crown/logo image in images/logo.webp to replace this icon -->
-    <img src="images/logo.webp" class="logo-img" alt="Logo" onerror="this.outerHTML='<div style=\'color:var(--purple);font-size:1.5rem;\'>👑</div>'">
     <div class="logo-text">Sprite<span>Plaza</span></div>
-  </div>
-  <div class="header-actions">
-    <button class="icon-btn" onclick="switchTab('sprite-plaza')">
-      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-    </button>
-    <button class="icon-btn">
-      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-    </button>
   </div>
 </header>
 
 <main>
   <!-- HOME TAB -->
   <section class="section active" id="home">
-    <div class="hero">
-      <h1>SPRITE<br><span>PLAZA</span></h1>
-      <p>The ultimate Fortnite sprite collection and trading hub!</p>
-      <button class="hero-btn" onclick="switchTab('sprite-plaza')">Explore Sprites →</button>
-    </div>
-
     <div class="menu-grid">
       <div class="menu-card" onclick="switchTab('sprite-plaza')">
-        <div class="icon">
-          <!-- Image Icon -->
-          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-        </div>
         <h3>Sprite Plaza</h3>
-        <p>Browse and collect Fortnite sprites!</p>
-        <div class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        <p>Browse and collect</p>
       </div>
       <div class="menu-card" onclick="switchTab('trading-plaza')">
-        <div class="icon">
-          <!-- Fixed Trading Arrows Icon -->
-          <svg viewBox="0 0 24 24"><path d="M17 3l4 4-4 4"/><path d="M3 7h18"/><path d="M7 21l-4-4 4-4"/><path d="M21 17H3"/></svg>
-        </div>
         <h3>Trading Plaza</h3>
-        <p>Trade sprites with other players!</p>
-        <div class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        <p>Trade with players</p>
       </div>
-      <div class="menu-card" onclick="switchTab('profile')">
-        <div class="icon">
-          <!-- User Icon -->
-          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-        </div>
-        <h3>Profile</h3>
-        <p>Show off your collection!</p>
-        <div class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-      </div>
-      <div class="menu-card">
-        <div class="icon">
-          <!-- Discord Icon -->
-          <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
-        </div>
-        <h3>Discord</h3>
-        <p>Join our community!</p>
-        <div class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-      </div>
-    </div>
-
-    <div class="section-header">
-      <h2>Featured Sprites</h2>
-      <span class="view-all" onclick="switchTab('sprite-plaza')">View All →</span>
-    </div>
-    <div class="featured-row">
-      <!-- These fallback to web images if your local images aren't uploaded -->
-      <div class="featured-item"><img src="images/th_peekypeely_base.webp" onerror="this.src='https://spritecatch.com/images/sprites/peeky-peely.webp'" alt="Peely"></div>
-      <div class="featured-item"><img src="images/th_squiplash_base.webp" onerror="this.src='https://spritecatch.com/images/sprites/boss.webp'" alt="Squiplash"></div>
-      <div class="featured-item"><img src="images/th_liluzi_base.webp" onerror="this.src='https://spritecatch.com/images/sprites/grim.webp'" alt="Uzi"></div>
-      <div class="featured-item"><img src="images/th_minimiku_base.webp" onerror="this.src='https://spritecatch.com/images/sprites/aura.webp'" alt="Miku"></div>
     </div>
   </section>
 
   <!-- SPRITE PLAZA TAB -->
   <section class="section" id="sprite-plaza">
     <div class="season-tabs" id="seasonTabs"></div>
-
-    <div class="toolbar">
-      <input type="text" id="search" placeholder="Search sprites..." />
-      <select id="filterState">
-        <option value="all">All Status</option>
-        <option value="owned">Owned</option>
-        <option value="mastered">Mastered</option>
-        <option value="missing">Missing</option>
-      </select>
-    </div>
-
-    <div class="progress-bar-container">
-      <div class="progress-text">
-        <span id="progressText">0 / 0 collected</span>
-        <span id="masteredText">0 mastered</span>
-      </div>
-      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-    </div>
-
     <div class="sprite-list" id="grid"></div>
-
-    <div class="panel">
-      <button class="btn" id="exportBtn">Export Collection</button>
-      <textarea id="exportArea" readonly></textarea>
-    </div>
-    <div class="panel">
-      <button class="btn danger" id="wipeBtn">Wipe All Data</button>
-    </div>
   </section>
 
   <!-- TRADING PLAZA TAB -->
@@ -404,333 +117,230 @@
       <p>The Trading Plaza is currently under construction.</p>
     </div>
   </section>
-
-  <!-- PROFILE TAB -->
-  <section class="section" id="profile">
-    <div class="profile-header">
-      <div class="profile-avatar">M</div>
-      <div>
-        <h2 style="font-size:1.2rem;">Midnight</h2>
-        <p style="color:var(--text-muted); font-size:0.8rem;">Sprite Plaza Creator</p>
-      </div>
-    </div>
-    <div class="profile-stats">
-      <div class="stat-card"><div class="num" id="pOwned">0</div><div class="lbl">Owned</div></div>
-      <div class="stat-card"><div class="num" id="pMastered">0</div><div class="lbl">Mastered</div></div>
-      <div class="stat-card"><div class="num" id="pTotal">0</div><div class="lbl">Total</div></div>
-    </div>
-  </section>
 </main>
 
 <!-- BOTTOM NAV -->
 <nav class="bottom-nav">
-  <button class="nav-item active" data-target="home">
+  <button class="nav-item active" data-target="home" onclick="switchTab('home')">
     <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
     Home
   </button>
-  <button class="nav-item" data-target="trading-plaza">
+  <button class="nav-item" data-target="sprite-plaza" onclick="switchTab('sprite-plaza')">
+    <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+    Sprite Plaza
+  </button>
+  <button class="nav-item" data-target="trading-plaza" onclick="switchTab('trading-plaza')">
     <svg viewBox="0 0 24 24"><path d="M19 7l-4-4-4 4h3v6H4v2h10v6h3v-6h3v-2h-3V7z"/></svg>
     Trading
-  </button>
-  <button class="nav-item" data-target="profile">
-    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-    Profile
-  </button>
-  <button class="nav-item">
-    <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
-    Discord
   </button>
 </nav>
 
 <script>
-// Added explicit image paths for all variants in the new season
+// FULL DATA WITH EXPLICIT "BASIC", "GOLD", "FORTUNE", "CURSED" PATHS
 const SPRITE_DATA = {
   mini: [
     { 
-      id: "halfpeeld", name: "Halfpeel'd", 
-      image: "images/th_halfpeeld_base.webp", 
+      id: "halfpeeld", name: "Halfpeel'd", image: "Images/th_halfpeeld_basic.webp", 
       variants: [
-        { key: "base", name: "Base", img: "images/th_halfpeeld_base.webp" },
-        { key: "fortune", name: "Fortune", img: "images/th_halfpeeld_fortune.webp" },
-        { key: "cursed", name: "Cursed", img: "images/th_halfpeeld_cursed.webp" },
-        { key: "gold", name: "Gold", img: "images/th_halfpeeld_gold.webp" }
+        { key: "basic", name: "Basic", img: "Images/th_halfpeeld_basic.webp" },
+        { key: "gold", name: "Gold", img: "Images/th_halfpeeld_gold.webp" },
+        { key: "fortune", name: "Fortune", img: "Images/th_halfpeeld_fortune.webp" },
+        { key: "cursed", name: "Cursed", img: "Images/th_halfpeeld_cursed.webp" }
       ]
     },
     { 
-      id: "repete", name: "Re-Pete", 
-      image: "images/th_repete_base.webp", 
+      id: "repete", name: "Re-Pete", image: "Images/th_repete_basic.webp", 
       variants: [
-        { key: "base", name: "Base", img: "images/th_repete_base.webp" },
-        { key: "fortune", name: "Fortune", img: "images/th_repete_fortune.webp" },
-        { key: "cursed", name: "Cursed", img: "images/th_repete_cursed.webp" },
-        { key: "gold", name: "Gold", img: "images/th_repete_gold.webp" }
+        { key: "basic", name: "Basic", img: "Images/th_repete_basic.webp" },
+        { key: "gold", name: "Gold", img: "Images/th_repete_gold.webp" },
+        { key: "fortune", name: "Fortune", img: "Images/th_repete_fortune.webp" },
+        { key: "cursed", name: "Cursed", img: "Images/th_repete_cursed.webp" }
       ]
     },
     { 
-      id: "barryofish", name: "Barry O'Fish", 
-      image: "images/th_barryofish_base.webp", 
+      id: "barryofish", name: "Barry O'Fish", image: "Images/th_barryofish_basic.webp", 
       variants: [
-        { key: "base", name: "Base", img: "images/th_barryofish_base.webp" },
-        { key: "fortune", name: "Fortune", img: "images/th_barryofish_fortune.webp" },
-        { key: "cursed", name: "Cursed", img: "images/th_barryofish_cursed.webp" },
-        { key: "gold", name: "Gold", img: "images/th_barryofish_gold.webp" }
+        { key: "basic", name: "Basic", img: "Images/th_barryofish_basic.webp" },
+        { key: "gold", name: "Gold", img: "Images/th_barryofish_gold.webp" },
+        { key: "fortune", name: "Fortune", img: "Images/th_barryofish_fortune.webp" },
+        { key: "cursed", name: "Cursed", img: "Images/th_barryofish_cursed.webp" }
       ]
     },
     { 
-      id: "wayfinder", name: "Wayfinder", 
-      image: "images/th_wayfinder_base.webp", 
+      id: "wayfinder", name: "Wayfinder", image: "Images/th_wayfinder_basic.webp", 
       variants: [
-        { key: "base", name: "Base", img: "images/th_wayfinder_base.webp" },
-        { key: "fortune", name: "Fortune", img: "images/th_wayfinder_fortune.webp" },
-        { key: "cursed", name: "Cursed", img: "images/th_wayfinder_cursed.webp" },
-        { key: "gold", name: "Gold", img: "images/th_wayfinder_gold.webp" }
+        { key: "basic", name: "Basic", img: "Images/th_wayfinder_basic.webp" },
+        { key: "gold", name: "Gold", img: "Images/th_wayfinder_gold.webp" },
+        { key: "fortune", name: "Fortune", img: "Images/th_wayfinder_fortune.webp" },
+        { key: "cursed", name: "Cursed", img: "Images/th_wayfinder_cursed.webp" }
       ]
     },
     { 
-      id: "chester", name: "Chester", 
-      image: "images/th_chester_base.webp", 
+      id: "chester", name: "Chester", image: "Images/th_chester_basic.webp", 
       variants: [
-        { key: "base", name: "Base", img: "images/th_chester_base.webp" },
-        { key: "fortune", name: "Fortune", img: "images/th_chester_fortune.webp" },
-        { key: "cursed", name: "Cursed", img: "images/th_chester_cursed.webp" },
-        { key: "gold", name: "Gold", img: "images/th_chester_gold.webp" }
+        { key: "basic", name: "Basic", img: "Images/th_chester_basic.webp" },
+        { key: "gold", name: "Gold", img: "Images/th_chester_gold.webp" },
+        { key: "fortune", name: "Fortune", img: "Images/th_chester_fortune.webp" },
+        { key: "cursed", name: "Cursed", img: "Images/th_chester_cursed.webp" }
       ]
     },
     { 
-      id: "kelper", name: "Kelper", 
-      image: "images/th_kelper_base.webp", 
+      id: "kelper", name: "Kelper", image: "Images/th_kelper_basic.webp", 
       variants: [
-        { key: "base", name: "Base", img: "images/th_kelper_base.webp" },
-        { key: "fortune", name: "Fortune", img: "images/th_kelper_fortune.webp" },
-        { key: "cursed", name: "Cursed", img: "images/th_kelper_cursed.webp" },
-        { key: "gold", name: "Gold", img: "images/th_kelper_gold.webp" }
+        { key: "basic", name: "Basic", img: "Images/th_kelper_basic.webp" },
+        { key: "gold", name: "Gold", img: "Images/th_kelper_gold.webp" },
+        { key: "fortune", name: "Fortune", img: "Images/th_kelper_fortune.webp" },
+        { key: "cursed", name: "Cursed", img: "Images/th_kelper_cursed.webp" }
       ]
     },
     { 
-      id: "exmarks", name: "Exmarks", 
-      image: "images/th_exmarks_base.webp", 
+      id: "exmarks", name: "Exmarks", image: "Images/th_exmarks_basic.webp", 
       variants: [
-        { key: "base", name: "Base", img: "images/th_exmarks_base.webp" },
-        { key: "fortune", name: "Fortune", img: "images/th_exmarks_fortune.webp" },
-        { key: "cursed", name: "Cursed", img: "images/th_exmarks_cursed.webp" },
-        { key: "gold", name: "Gold", img: "images/th_exmarks_gold.webp" }
+        { key: "basic", name: "Basic", img: "Images/th_exmarks_basic.webp" },
+        { key: "gold", name: "Gold", img: "Images/th_exmarks_gold.webp" },
+        { key: "fortune", name: "Fortune", img: "Images/th_exmarks_fortune.webp" },
+        { key: "cursed", name: "Cursed", img: "Images/th_exmarks_cursed.webp" }
       ]
     },
     { 
-      id: "lilsquibbly", name: "Lil' Squibbly", 
-      image: "images/th_lilsquibbly_base.webp", 
+      id: "lilsquibbly", name: "Lil' Squibbly", image: "Images/th_lilsquibbly_basic.webp", 
       variants: [
-        { key: "base", name: "Base", img: "images/th_lilsquibbly_base.webp" },
-        { key: "fortune", name: "Fortune", img: "images/th_lilsquibbly_fortune.webp" },
-        { key: "cursed", name: "Cursed", img: "images/th_lilsquibbly_cursed.webp" },
-        { key: "gold", name: "Gold", img: "images/th_lilsquibbly_gold.webp" }
+        { key: "basic", name: "Basic", img: "Images/th_lilsquibbly_basic.webp" },
+        { key: "gold", name: "Gold", img: "Images/th_lilsquibbly_gold.webp" },
+        { key: "fortune", name: "Fortune", img: "Images/th_lilsquibbly_fortune.webp" },
+        { key: "cursed", name: "Cursed", img: "Images/th_lilsquibbly_cursed.webp" }
       ]
     },
     { 
-      id: "squiplash", name: "Squiplash", 
-      image: "images/th_squiplash_base.webp", 
+      id: "squiplash", name: "Squiplash", image: "Images/th_squiplash_basic.webp", 
       variants: [
-        { key: "base", name: "Base", img: "images/th_squiplash_base.webp" },
-        { key: "fortune", name: "Fortune", img: "images/th_squiplash_fortune.webp" },
-        { key: "cursed", name: "Cursed", img: "images/th_squiplash_cursed.webp" },
-        { key: "gold", name: "Gold", img: "images/th_squiplash_gold.webp" }
+        { key: "basic", name: "Basic", img: "Images/th_squiplash_basic.webp" },
+        { key: "gold", name: "Gold", img: "Images/th_squiplash_gold.webp" },
+        { key: "fortune", name: "Fortune", img: "Images/th_squiplash_fortune.webp" },
+        { key: "cursed", name: "Cursed", img: "Images/th_squiplash_cursed.webp" }
       ]
     },
     { 
-      id: "lilflacko", name: "Lil' Flacko", 
-      image: "images/th_lilflacko_base.webp", 
+      id: "lilflacko", name: "Lil' Flacko", image: "Images/th_lilflacko_basic.webp", 
       variants: [
-        { key: "base", name: "Base", img: "images/th_lilflacko_base.webp" },
-        { key: "fortune", name: "Fortune", img: "images/th_lilflacko_fortune.webp" },
-        { key: "cursed", name: "Cursed", img: "images/th_lilflacko_cursed.webp" },
-        { key: "gold", name: "Gold", img: "images/th_lilflacko_gold.webp" }
+        { key: "basic", name: "Basic", img: "Images/th_lilflacko_basic.webp" },
+        { key: "gold", name: "Gold", img: "Images/th_lilflacko_gold.webp" },
+        { key: "fortune", name: "Fortune", img: "Images/th_lilflacko_fortune.webp" },
+        { key: "cursed", name: "Cursed", img: "Images/th_lilflacko_cursed.webp" }
       ]
     },
     { 
-      id: "liluzi", name: "Lil' Uzi Vert Jr.", 
-      image: "images/th_liluzi_base.webp", 
+      id: "liluzi", name: "Lil' Uzi Vert Jr.", image: "Images/th_liluzi_basic.webp", 
       variants: [
-        { key: "base", name: "Base", img: "images/th_liluzi_base.webp" },
-        { key: "fortune", name: "Fortune", img: "images/th_liluzi_fortune.webp" },
-        { key: "cursed", name: "Cursed", img: "images/th_liluzi_cursed.webp" },
-        { key: "gold", name: "Gold", img: "images/th_liluzi_gold.webp" }
+        { key: "basic", name: "Basic", img: "Images/th_liluzi_basic.webp" },
+        { key: "gold", name: "Gold", img: "Images/th_liluzi_gold.webp" },
+        { key: "fortune", name: "Fortune", img: "Images/th_liluzi_fortune.webp" },
+        { key: "cursed", name: "Cursed", img: "Images/th_liluzi_cursed.webp" }
       ]
     },
     { 
-      id: "siroscar", name: "Sir Oscar the Second", 
-      image: "images/th_siroscar_base.webp", 
+      id: "siroscar", name: "Sir Oscar the Second", image: "Images/th_siroscar_basic.webp", 
       variants: [
-        { key: "base", name: "Base", img: "images/th_siroscar_base.webp" },
-        { key: "fortune", name: "Fortune", img: "images/th_siroscar_fortune.webp" },
-        { key: "cursed", name: "Cursed", img: "images/th_siroscar_cursed.webp" },
-        { key: "gold", name: "Gold", img: "images/th_siroscar_gold.webp" }
+        { key: "basic", name: "Basic", img: "Images/th_siroscar_basic.webp" },
+        { key: "gold", name: "Gold", img: "Images/th_siroscar_gold.webp" },
+        { key: "fortune", name: "Fortune", img: "Images/th_siroscar_fortune.webp" },
+        { key: "cursed", name: "Cursed", img: "Images/th_siroscar_cursed.webp" }
       ]
     },
     { 
-      id: "transpondersnail", name: "Transponder Snail", 
-      image: "images/th_transpondersnail_base.webp", 
+      id: "transpondersnail", name: "Transponder Snail", image: "Images/th_transpondersnail_basic.webp", 
       variants: [
-        { key: "base", name: "Base", img: "images/th_transpondersnail_base.webp" }
+        { key: "basic", name: "Basic", img: "Images/th_transpondersnail_basic.webp" }
       ]
     },
     { 
-      id: "plundarrgh", name: "Plundarrgh", 
-      image: "images/th_plundarrgh_base.webp", 
+      id: "plundarrgh", name: "Plundarrgh", image: "Images/th_plundarrgh_basic.webp", 
       variants: [
-        { key: "base", name: "Base", img: "images/th_plundarrgh_base.webp" },
-        { key: "fortune", name: "Fortune", img: "images/th_plundarrgh_fortune.webp" },
-        { key: "cursed", name: "Cursed", img: "images/th_plundarrgh_cursed.webp" },
-        { key: "gold", name: "Gold", img: "images/th_plundarrgh_gold.webp" }
+        { key: "basic", name: "Basic", img: "Images/th_plundarrgh_basic.webp" },
+        { key: "gold", name: "Gold", img: "Images/th_plundarrgh_gold.webp" },
+        { key: "fortune", name: "Fortune", img: "Images/th_plundarrgh_fortune.webp" },
+        { key: "cursed", name: "Cursed", img: "Images/th_plundarrgh_cursed.webp" }
       ]
     },
     { 
-      id: "minimiku", name: "Mini Miku", 
-      image: "images/th_minimiku_base.webp", 
+      id: "minimiku", name: "Mini Miku", image: "Images/th_minimiku_basic.webp", 
       variants: [
-        { key: "base", name: "Base", img: "images/th_minimiku_base.webp" },
-        { key: "fortune", name: "Fortune", img: "images/th_minimiku_fortune.webp" },
-        { key: "cursed", name: "Cursed", img: "images/th_minimiku_cursed.webp" },
-        { key: "gold", name: "Gold", img: "images/th_minimiku_gold.webp" }
+        { key: "basic", name: "Basic", img: "Images/th_minimiku_basic.webp" },
+        { key: "gold", name: "Gold", img: "Images/th_minimiku_gold.webp" },
+        { key: "fortune", name: "Fortune", img: "Images/th_minimiku_fortune.webp" },
+        { key: "cursed", name: "Cursed", img: "Images/th_minimiku_cursed.webp" }
       ]
     },
     { 
-      id: "sweetdreams", name: "Sweet Dreams", 
-      image: "images/th_sweetdreams_base.webp", 
+      id: "sweetdreams", name: "Sweet Dreams", image: "Images/th_sweetdreams_basic.webp", 
       variants: [
-        { key: "base", name: "Base", img: "images/th_sweetdreams_base.webp" }
+        { key: "basic", name: "Basic", img: "Images/th_sweetdreams_basic.webp" }
       ]
     },
     { 
-      id: "zee", name: "Zee", 
-      image: "images/th_zee_base.webp", 
+      id: "zee", name: "Zee", image: "Images/th_zee_basic.webp", 
       variants: [
-        { key: "base", name: "Base", img: "images/th_zee_base.webp" }
+        { key: "basic", name: "Basic", img: "Images/th_zee_basic.webp" }
       ]
     }
   ],
-  c7s4: [], // Add rest of S4 here
-  c7s3: []  // Add rest of S3 here
+  c7s4: [], // ADD C7S4 LATER
+  c7s3: []  // ADD C7S3 LATER
 };
 
 const SEASON_LABELS = { mini: "Treasure Hunters", c7s4: "C7 S4", c7s3: "C7 S3" };
-const STORAGE_KEY = "spritePlaza.v9";
+let activeSeason = "mini";
 
-let store = { ticks: {}, activeSeason: "mini" };
-
-// NAVIGATION LOGIC
 function switchTab(tabId) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  
   document.getElementById(tabId).classList.add('active');
   const navBtn = document.querySelector(`.nav-item[data-target="${tabId}"]`);
   if (navBtn) navBtn.classList.add('active');
-  window.scrollTo(0, 0);
 }
 
-document.querySelectorAll('.nav-item').forEach(btn => {
-  btn.addEventListener('click', () => {
-    if(btn.dataset.target) switchTab(btn.dataset.target);
-  });
-});
-
-// STORAGE & LOGIC
-function loadStore() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
-      const p = JSON.parse(raw);
-      store.ticks = p.ticks || {};
-      store.activeSeason = p.activeSeason || "mini";
-    }
-  } catch (e) {}
-}
-function saveStore() { localStorage.setItem(STORAGE_KEY, JSON.stringify(store)); }
-
-function getVariantState(spriteId, variantKey) {
-  return store.ticks[`${spriteId}_${variantKey}`] || "missing";
-}
-
-function cycleVariantState(spriteId, variantKey) {
-  const key = `${spriteId}_${variantKey}`;
-  const cur = getVariantState(spriteId, variantKey);
-  if (cur === "missing") store.ticks[key] = "owned";
-  else if (cur === "owned") store.ticks[key] = "mastered";
-  else delete store.ticks[key];
-  saveStore();
-}
-
-// RENDERING
 function renderSeasonTabs() {
   const wrap = document.getElementById("seasonTabs");
   wrap.innerHTML = "";
   Object.keys(SEASON_LABELS).forEach(key => {
     const btn = document.createElement("button");
-    btn.className = "season-tab" + (store.activeSeason === key ? " active" : "");
+    btn.className = "season-tab" + (activeSeason === key ? " active" : "");
     btn.textContent = SEASON_LABELS[key];
-    btn.onclick = () => { store.activeSeason = key; saveStore(); renderAll(); };
+    btn.onclick = () => { activeSeason = key; renderSeasonTabs(); renderGrid(); };
     wrap.appendChild(btn);
   });
 }
 
 function renderGrid() {
   const grid = document.getElementById("grid");
-  const q = document.getElementById("search").value.trim().toLowerCase();
-  const fState = document.getElementById("filterState").value;
-  
-  const list = (SPRITE_DATA[store.activeSeason] || []).filter(s => {
-    if (q && !s.name.toLowerCase().includes(q)) return false;
-    if (fState !== "all") {
-      const states = s.variants.map(v => getVariantState(s.id, v.key));
-      if (fState === "missing" && !states.every(st => st === "missing")) return false;
-      if (fState === "owned" && !states.some(st => st === "owned" || st === "mastered")) return false;
-      if (fState === "mastered" && !states.some(st => st === "mastered")) return false;
-    }
-    return true;
-  });
-
   grid.innerHTML = "";
-  list.forEach(s => {
+  
+  (SPRITE_DATA[activeSeason] || []).forEach(s => {
     const card = document.createElement("div");
     card.className = "sprite-card";
 
     const img = document.createElement("img");
     img.className = "sprite-img";
     img.src = s.image; 
-    img.alt = s.name;
-    img.onerror = () => { img.style.display = 'none'; card.innerHTML = `<div style="font-weight:bold;font-size:1.5rem;width:56px;text-align:center">${s.name.charAt(0)}</div>` + card.innerHTML; };
-
+    
     const info = document.createElement("div");
     info.className = "sprite-info";
-    
-    const title = document.createElement("div");
-    title.className = "sprite-title";
-    title.textContent = s.name;
+    info.innerHTML = `<div class="sprite-title">${s.name}</div>`;
 
     const vRow = document.createElement("div");
     vRow.className = "variants-row";
-
+    
     s.variants.forEach(v => {
-      const state = getVariantState(s.id, v.key);
       const btn = document.createElement("div");
       btn.className = "v-btn";
-      btn.dataset.state = state;
       btn.dataset.label = v.name;
       
       const vImg = document.createElement("img");
       vImg.src = v.img;
-      // If variant image is missing, fallback to a colored circle
-      vImg.onerror = () => { 
-        vImg.style.display = 'none'; 
-        btn.style.background = state === "owned" ? "#22c55e" : state === "mastered" ? "#eab308" : "var(--border)";
-      };
       btn.appendChild(vImg);
-
-      btn.onclick = () => { cycleVariantState(s.id, v.key); renderAll(); };
       vRow.appendChild(btn);
     });
 
-    info.appendChild(title);
     info.appendChild(vRow);
     card.appendChild(img);
     card.appendChild(info);
@@ -738,73 +348,10 @@ function renderGrid() {
   });
 }
 
-function renderProgress() {
-  let total = 0, owned = 0, mastered = 0;
-  (SPRITE_DATA[store.activeSeason] || []).forEach(s => {
-    s.variants.forEach(v => {
-      total++;
-      const st = getVariantState(s.id, v.key);
-      if (st === "owned") owned++;
-      if (st === "mastered") mastered++;
-    });
-  });
-  document.getElementById("progressText").textContent = `${owned + mastered} / ${total} collected`;
-  document.getElementById("masteredText").textContent = `${mastered} mastered`;
-  document.getElementById("progressFill").style.width = total ? ((owned + mastered) / total) * 100 + "%" : "0%";
-}
-
-function renderProfile() {
-  let collected = 0, mastered = 0, total = 0;
-  Object.keys(SPRITE_DATA).forEach(k => {
-    SPRITE_DATA[k].forEach(s => {
-      s.variants.forEach(v => {
-        total++;
-        const st = getVariantState(s.id, v.key);
-        if (st === "owned") collected++;
-        if (st === "mastered") mastered++;
-      });
-    });
-  });
-  document.getElementById("pOwned").textContent = collected;
-  document.getElementById("pMastered").textContent = mastered;
-  document.getElementById("pTotal").textContent = total;
-}
-
-function renderAll() {
+document.addEventListener("DOMContentLoaded", () => {
   renderSeasonTabs();
   renderGrid();
-  renderProgress();
-  renderProfile();
-}
-
-// INIT
-document.addEventListener("DOMContentLoaded", () => {
-  loadStore();
-  renderAll();
-
-  document.getElementById("search").addEventListener("input", renderGrid);
-  document.getElementById("filterState").addEventListener("change", renderGrid);
-  
-  document.getElementById("exportBtn").addEventListener("click", () => {
-    const area = document.getElementById("exportArea");
-    let out = `SPRITE PLAZA — ${SEASON_LABELS[store.activeSeason]}\n\n`;
-    (SPRITE_DATA[store.activeSeason] || []).forEach(s => {
-      const owned = s.variants.filter(v => getVariantState(s.id, v.key) !== "missing");
-      if (owned.length) out += `${s.name}: ${owned.map(v=>v.name).join(", ")}\n`;
-    });
-    area.value = out;
-    area.style.display = "block";
-    area.select();
-  });
-
-  document.getElementById("wipeBtn").addEventListener("click", () => {
-    if(confirm("Wipe all data?")) {
-      store = { ticks: {}, activeSeason: "mini" };
-      localStorage.removeItem(STORAGE_KEY);
-      renderAll();
-      document.getElementById("exportArea").style.display = "none";
-    }
-  });
+  switchTab('home'); 
 });
 </script>
 </body>
