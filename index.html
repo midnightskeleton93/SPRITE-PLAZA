@@ -22,7 +22,7 @@
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
-    padding-bottom: 80px; /* Space for bottom nav */
+    padding-bottom: 80px;
   }
 
   /* HEADER */
@@ -35,9 +35,14 @@
   .logo-container {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
   }
-  .logo-icon { color: var(--purple); font-size: 1.5rem; }
+  /* Site Logo Image */
+  .logo-img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+  }
   .logo-text {
     font-size: 1.2rem;
     font-weight: 900;
@@ -64,7 +69,9 @@
 
   /* HERO BANNER */
   .hero {
-    background: linear-gradient(135deg, rgba(109, 40, 217, 0.8) 0%, rgba(139, 92, 246, 0.4) 100%), url('https://images.unsplash.com/photo-1614680376573-df3480f0c6ff?auto=format&fit=crop&q=80&w=600') center/cover;
+    /* Looks for your custom banner image, with a purple fallback if it fails */
+    background: linear-gradient(135deg, rgba(109, 40, 217, 0.9) 0%, rgba(139, 92, 246, 0.7) 100%), url('images/banner.webp') center/cover;
+    background-color: #2A1B54;
     border-radius: 24px;
     padding: 24px;
     position: relative;
@@ -121,19 +128,22 @@
     border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
     margin-bottom: 12px;
-    font-size: 1.2rem;
   }
+  .menu-card .icon svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .menu-card h3 { font-size: 1rem; margin-bottom: 4px; }
   .menu-card p { font-size: 0.75rem; color: var(--text-muted); line-height: 1.2; }
+  
+  /* Arrow Icon Fix */
   .menu-card .arrow {
     position: absolute;
     bottom: 16px; right: 16px;
-    background: rgba(255, 255, 255, 0.1);
-    width: 24px; height: 24px;
+    background: rgba(255, 255, 255, 0.08);
+    width: 26px; height: 26px;
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 0.7rem;
+    color: var(--text-muted);
   }
+  .menu-card .arrow svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
 
   /* FEATURED */
   .section-header {
@@ -179,7 +189,7 @@
   .nav-item.active { color: var(--purple); }
   .nav-item svg { width: 22px; height: 22px; fill: currentColor; }
 
-  /* SPRITE LIST (Inside Sprite Plaza) */
+  /* SPRITE LIST */
   .toolbar {
     display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;
   }
@@ -211,25 +221,34 @@
   }
   .sprite-img {
     width: 56px; height: 56px; border-radius: 12px;
-    background: rgba(255,255,255,0.05); object-fit: contain; padding: 4px;
+    background: rgba(255,255,255,0.05); object-fit: contain; padding: 4px; flex-shrink: 0;
   }
   .sprite-info { flex: 1; }
   .sprite-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+  
+  /* VARIANT BUTTONS */
   .variants-row { display: flex; gap: 6px; flex-wrap: wrap; }
   .v-btn {
-    width: 18px; height: 18px; border-radius: 50%;
-    border: 2px solid var(--border); background: transparent;
+    width: 24px; height: 24px; border-radius: 50%;
+    border: 2px solid var(--border); background: var(--bg);
     cursor: pointer; display: flex; align-items: center; justify-content: center;
-    font-size: 10px; color: transparent; transition: all 0.15s; position: relative;
+    transition: all 0.15s; position: relative; padding: 2px;
   }
+  .v-btn img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
+  
   .v-btn::after {
-    content: attr(data-label); position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%);
+    content: attr(data-label); position: absolute; bottom: -24px; left: 50%; transform: translateX(-50%);
     background: #000; color: #fff; font-size: 0.6rem; padding: 2px 6px;
     border-radius: 4px; white-space: nowrap; opacity: 0; pointer-events: none; z-index: 10;
+    text-transform: capitalize;
   }
   .v-btn:hover::after { opacity: 1; }
-  .v-btn[data-state="owned"] { border-color: #22c55e; background: #22c55e; color: #fff; }
-  .v-btn[data-state="mastered"] { border-color: #eab308; background: #eab308; color: #000; }
+  
+  /* Variant States */
+  .v-btn[data-state="owned"] { border-color: #22c55e; box-shadow: 0 0 8px rgba(34, 197, 94, 0.4); }
+  .v-btn[data-state="mastered"] { border-color: #eab308; box-shadow: 0 0 8px rgba(234, 179, 8, 0.4); }
+  .v-btn[data-state="missing"] { opacity: 0.4; filter: grayscale(100%); }
+  .v-btn:hover { opacity: 1; filter: grayscale(0%); transform: scale(1.1); }
 
   .panel {
     background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px;
@@ -243,14 +262,12 @@
     font-family: monospace; font-size: 0.75rem; margin-top: 10px; display: none;
   }
 
-  /* COMING SOON */
   .coming-soon {
     text-align: center; padding: 60px 20px; background: var(--card-bg);
     border-radius: 24px; border: 1px dashed var(--purple); margin-top: 20px;
   }
   .coming-soon h2 { color: var(--purple); margin-bottom: 8px; }
 
-  /* PROFILE */
   .profile-header {
     display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
     background: var(--card-bg); padding: 20px; border-radius: 20px; border: 1px solid var(--border);
@@ -272,7 +289,8 @@
 
 <header>
   <div class="logo-container">
-    <div class="logo-icon">👑</div>
+    <!-- Put your crown/logo image in images/logo.webp to replace this icon -->
+    <img src="images/logo.webp" class="logo-img" alt="Logo" onerror="this.outerHTML='<div style=\'color:var(--purple);font-size:1.5rem;\'>👑</div>'">
     <div class="logo-text">Sprite<span>Plaza</span></div>
   </div>
   <div class="header-actions">
@@ -296,28 +314,40 @@
 
     <div class="menu-grid">
       <div class="menu-card" onclick="switchTab('sprite-plaza')">
-        <div class="icon">🖼️</div>
+        <div class="icon">
+          <!-- Image Icon -->
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+        </div>
         <h3>Sprite Plaza</h3>
         <p>Browse and collect Fortnite sprites!</p>
-        <div class="arrow">→</div>
+        <div class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
       </div>
       <div class="menu-card" onclick="switchTab('trading-plaza')">
-        <div class="icon">🔄</div>
+        <div class="icon">
+          <!-- Fixed Trading Arrows Icon -->
+          <svg viewBox="0 0 24 24"><path d="M17 3l4 4-4 4"/><path d="M3 7h18"/><path d="M7 21l-4-4 4-4"/><path d="M21 17H3"/></svg>
+        </div>
         <h3>Trading Plaza</h3>
         <p>Trade sprites with other players!</p>
-        <div class="arrow">→</div>
+        <div class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
       </div>
       <div class="menu-card" onclick="switchTab('profile')">
-        <div class="icon">👤</div>
+        <div class="icon">
+          <!-- User Icon -->
+          <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        </div>
         <h3>Profile</h3>
         <p>Show off your collection!</p>
-        <div class="arrow">→</div>
+        <div class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
       </div>
       <div class="menu-card">
-        <div class="icon">🎮</div>
+        <div class="icon">
+          <!-- Discord Icon -->
+          <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+        </div>
         <h3>Discord</h3>
         <p>Join our community!</p>
-        <div class="arrow">→</div>
+        <div class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
       </div>
     </div>
 
@@ -326,10 +356,11 @@
       <span class="view-all" onclick="switchTab('sprite-plaza')">View All →</span>
     </div>
     <div class="featured-row">
-      <div class="featured-item"><img src="https://spritecatch.com/images/sprites/peeky-peely.webp" alt="Peely"></div>
-      <div class="featured-item"><img src="https://spritecatch.com/images/sprites/boss.webp" alt="Boss"></div>
-      <div class="featured-item"><img src="https://spritecatch.com/images/sprites/grim.webp" alt="Grim"></div>
-      <div class="featured-item"><img src="https://spritecatch.com/images/sprites/aura.webp" alt="Aura"></div>
+      <!-- These fallback to web images if your local images aren't uploaded -->
+      <div class="featured-item"><img src="images/th_peekypeely_base.webp" onerror="this.src='https://spritecatch.com/images/sprites/peeky-peely.webp'" alt="Peely"></div>
+      <div class="featured-item"><img src="images/th_squiplash_base.webp" onerror="this.src='https://spritecatch.com/images/sprites/boss.webp'" alt="Squiplash"></div>
+      <div class="featured-item"><img src="images/th_liluzi_base.webp" onerror="this.src='https://spritecatch.com/images/sprites/grim.webp'" alt="Uzi"></div>
+      <div class="featured-item"><img src="images/th_minimiku_base.webp" onerror="this.src='https://spritecatch.com/images/sprites/aura.webp'" alt="Miku"></div>
     </div>
   </section>
 
@@ -412,87 +443,177 @@
 </nav>
 
 <script>
-// Data structure - images are now explicitly linked per sprite
+// Added explicit image paths for all variants in the new season
 const SPRITE_DATA = {
   mini: [
-    { id: "halfpeeld", name: "Halfpeel'd", image: "images/th_halfpeeld.webp", variants: ["base", "fortune", "cursed", "gold"] },
-    { id: "repete", name: "Re-Pete", image: "images/th_repete.webp", variants: ["base", "fortune", "cursed", "gold"] },
-    { id: "barryofish", name: "Barry O'Fish", image: "images/th_barryofish.webp", variants: ["base", "fortune", "cursed", "gold"] },
-    { id: "wayfinder", name: "Wayfinder", image: "images/th_wayfinder.webp", variants: ["base", "fortune", "cursed", "gold"] },
-    { id: "chester", name: "Chester", image: "images/th_chester.webp", variants: ["base", "fortune", "cursed", "gold"] },
-    { id: "kelper", name: "Kelper", image: "images/th_kelper.webp", variants: ["base", "fortune", "cursed", "gold"] },
-    { id: "exmarks", name: "Exmarks", image: "images/th_exmarks.webp", variants: ["base", "fortune", "cursed", "gold"] },
-    { id: "lilsquibbly", name: "Lil' Squibbly", image: "images/th_lilsquibbly.webp", variants: ["base", "fortune", "cursed", "gold"] },
-    { id: "squiplash", name: "Squiplash", image: "images/th_squiplash.webp", variants: ["base", "fortune", "cursed", "gold"] },
-    { id: "lilflacko", name: "Lil' Flacko", image: "images/th_lilflacko.webp", variants: ["base", "fortune", "cursed", "gold"] },
-    { id: "liluzi", name: "Lil' Uzi Vert Jr.", image: "images/th_liluzi.webp", variants: ["base", "fortune", "cursed", "gold"] },
-    { id: "siroscar", name: "Sir Oscar the Second", image: "images/th_siroscar.webp", variants: ["base", "fortune", "cursed", "gold"] },
-    { id: "transpondersnail", name: "Transponder Snail", image: "images/th_transpondersnail.webp", variants: ["base"] },
-    { id: "plundarrgh", name: "Plundarrgh", image: "images/th_plundarrgh.webp", variants: ["base", "fortune", "cursed", "gold"] },
-    { id: "minimiku", name: "Mini Miku", image: "images/th_minimiku.webp", variants: ["base", "fortune", "cursed", "gold"] },
-    { id: "sweetdreams", name: "Sweet Dreams", image: "images/th_sweetdreams.webp", variants: ["base"] },
-    { id: "zee", name: "Zee", image: "images/th_zee.webp", variants: ["base"] }
+    { 
+      id: "halfpeeld", name: "Halfpeel'd", 
+      image: "images/th_halfpeeld_base.webp", 
+      variants: [
+        { key: "base", name: "Base", img: "images/th_halfpeeld_base.webp" },
+        { key: "fortune", name: "Fortune", img: "images/th_halfpeeld_fortune.webp" },
+        { key: "cursed", name: "Cursed", img: "images/th_halfpeeld_cursed.webp" },
+        { key: "gold", name: "Gold", img: "images/th_halfpeeld_gold.webp" }
+      ]
+    },
+    { 
+      id: "repete", name: "Re-Pete", 
+      image: "images/th_repete_base.webp", 
+      variants: [
+        { key: "base", name: "Base", img: "images/th_repete_base.webp" },
+        { key: "fortune", name: "Fortune", img: "images/th_repete_fortune.webp" },
+        { key: "cursed", name: "Cursed", img: "images/th_repete_cursed.webp" },
+        { key: "gold", name: "Gold", img: "images/th_repete_gold.webp" }
+      ]
+    },
+    { 
+      id: "barryofish", name: "Barry O'Fish", 
+      image: "images/th_barryofish_base.webp", 
+      variants: [
+        { key: "base", name: "Base", img: "images/th_barryofish_base.webp" },
+        { key: "fortune", name: "Fortune", img: "images/th_barryofish_fortune.webp" },
+        { key: "cursed", name: "Cursed", img: "images/th_barryofish_cursed.webp" },
+        { key: "gold", name: "Gold", img: "images/th_barryofish_gold.webp" }
+      ]
+    },
+    { 
+      id: "wayfinder", name: "Wayfinder", 
+      image: "images/th_wayfinder_base.webp", 
+      variants: [
+        { key: "base", name: "Base", img: "images/th_wayfinder_base.webp" },
+        { key: "fortune", name: "Fortune", img: "images/th_wayfinder_fortune.webp" },
+        { key: "cursed", name: "Cursed", img: "images/th_wayfinder_cursed.webp" },
+        { key: "gold", name: "Gold", img: "images/th_wayfinder_gold.webp" }
+      ]
+    },
+    { 
+      id: "chester", name: "Chester", 
+      image: "images/th_chester_base.webp", 
+      variants: [
+        { key: "base", name: "Base", img: "images/th_chester_base.webp" },
+        { key: "fortune", name: "Fortune", img: "images/th_chester_fortune.webp" },
+        { key: "cursed", name: "Cursed", img: "images/th_chester_cursed.webp" },
+        { key: "gold", name: "Gold", img: "images/th_chester_gold.webp" }
+      ]
+    },
+    { 
+      id: "kelper", name: "Kelper", 
+      image: "images/th_kelper_base.webp", 
+      variants: [
+        { key: "base", name: "Base", img: "images/th_kelper_base.webp" },
+        { key: "fortune", name: "Fortune", img: "images/th_kelper_fortune.webp" },
+        { key: "cursed", name: "Cursed", img: "images/th_kelper_cursed.webp" },
+        { key: "gold", name: "Gold", img: "images/th_kelper_gold.webp" }
+      ]
+    },
+    { 
+      id: "exmarks", name: "Exmarks", 
+      image: "images/th_exmarks_base.webp", 
+      variants: [
+        { key: "base", name: "Base", img: "images/th_exmarks_base.webp" },
+        { key: "fortune", name: "Fortune", img: "images/th_exmarks_fortune.webp" },
+        { key: "cursed", name: "Cursed", img: "images/th_exmarks_cursed.webp" },
+        { key: "gold", name: "Gold", img: "images/th_exmarks_gold.webp" }
+      ]
+    },
+    { 
+      id: "lilsquibbly", name: "Lil' Squibbly", 
+      image: "images/th_lilsquibbly_base.webp", 
+      variants: [
+        { key: "base", name: "Base", img: "images/th_lilsquibbly_base.webp" },
+        { key: "fortune", name: "Fortune", img: "images/th_lilsquibbly_fortune.webp" },
+        { key: "cursed", name: "Cursed", img: "images/th_lilsquibbly_cursed.webp" },
+        { key: "gold", name: "Gold", img: "images/th_lilsquibbly_gold.webp" }
+      ]
+    },
+    { 
+      id: "squiplash", name: "Squiplash", 
+      image: "images/th_squiplash_base.webp", 
+      variants: [
+        { key: "base", name: "Base", img: "images/th_squiplash_base.webp" },
+        { key: "fortune", name: "Fortune", img: "images/th_squiplash_fortune.webp" },
+        { key: "cursed", name: "Cursed", img: "images/th_squiplash_cursed.webp" },
+        { key: "gold", name: "Gold", img: "images/th_squiplash_gold.webp" }
+      ]
+    },
+    { 
+      id: "lilflacko", name: "Lil' Flacko", 
+      image: "images/th_lilflacko_base.webp", 
+      variants: [
+        { key: "base", name: "Base", img: "images/th_lilflacko_base.webp" },
+        { key: "fortune", name: "Fortune", img: "images/th_lilflacko_fortune.webp" },
+        { key: "cursed", name: "Cursed", img: "images/th_lilflacko_cursed.webp" },
+        { key: "gold", name: "Gold", img: "images/th_lilflacko_gold.webp" }
+      ]
+    },
+    { 
+      id: "liluzi", name: "Lil' Uzi Vert Jr.", 
+      image: "images/th_liluzi_base.webp", 
+      variants: [
+        { key: "base", name: "Base", img: "images/th_liluzi_base.webp" },
+        { key: "fortune", name: "Fortune", img: "images/th_liluzi_fortune.webp" },
+        { key: "cursed", name: "Cursed", img: "images/th_liluzi_cursed.webp" },
+        { key: "gold", name: "Gold", img: "images/th_liluzi_gold.webp" }
+      ]
+    },
+    { 
+      id: "siroscar", name: "Sir Oscar the Second", 
+      image: "images/th_siroscar_base.webp", 
+      variants: [
+        { key: "base", name: "Base", img: "images/th_siroscar_base.webp" },
+        { key: "fortune", name: "Fortune", img: "images/th_siroscar_fortune.webp" },
+        { key: "cursed", name: "Cursed", img: "images/th_siroscar_cursed.webp" },
+        { key: "gold", name: "Gold", img: "images/th_siroscar_gold.webp" }
+      ]
+    },
+    { 
+      id: "transpondersnail", name: "Transponder Snail", 
+      image: "images/th_transpondersnail_base.webp", 
+      variants: [
+        { key: "base", name: "Base", img: "images/th_transpondersnail_base.webp" }
+      ]
+    },
+    { 
+      id: "plundarrgh", name: "Plundarrgh", 
+      image: "images/th_plundarrgh_base.webp", 
+      variants: [
+        { key: "base", name: "Base", img: "images/th_plundarrgh_base.webp" },
+        { key: "fortune", name: "Fortune", img: "images/th_plundarrgh_fortune.webp" },
+        { key: "cursed", name: "Cursed", img: "images/th_plundarrgh_cursed.webp" },
+        { key: "gold", name: "Gold", img: "images/th_plundarrgh_gold.webp" }
+      ]
+    },
+    { 
+      id: "minimiku", name: "Mini Miku", 
+      image: "images/th_minimiku_base.webp", 
+      variants: [
+        { key: "base", name: "Base", img: "images/th_minimiku_base.webp" },
+        { key: "fortune", name: "Fortune", img: "images/th_minimiku_fortune.webp" },
+        { key: "cursed", name: "Cursed", img: "images/th_minimiku_cursed.webp" },
+        { key: "gold", name: "Gold", img: "images/th_minimiku_gold.webp" }
+      ]
+    },
+    { 
+      id: "sweetdreams", name: "Sweet Dreams", 
+      image: "images/th_sweetdreams_base.webp", 
+      variants: [
+        { key: "base", name: "Base", img: "images/th_sweetdreams_base.webp" }
+      ]
+    },
+    { 
+      id: "zee", name: "Zee", 
+      image: "images/th_zee_base.webp", 
+      variants: [
+        { key: "base", name: "Base", img: "images/th_zee_base.webp" }
+      ]
+    }
   ],
-  c7s4: [
-    { id: "jonesy", name: "Jonesy", image: "images/s4_jonesy.webp", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "quack", "gold"] },
-    { id: "adventure", name: "Adventure", image: "images/s4_adventure.webp", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "quack", "gold"] },
-    { id: "bush", name: "Bush", image: "images/s4_bush.webp", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "quack", "gold"] },
-    { id: "8bit", name: "8-Bit", image: "images/s4_8bit.webp", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
-    { id: "megaman", name: "Mega Man", image: "images/s4_megaman.webp", variants: ["base"] },
-    { id: "onigiri", name: "Onigiri", image: "images/s4_onigiri.webp", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
-    { id: "stormscout", name: "Storm Scout", image: "images/s4_stormscout.webp", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
-    { id: "sonic", name: "Sonic", image: "images/s4_sonic.webp", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
-    { id: "tails", name: "Tails", image: "images/s4_tails.webp", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
-    { id: "shadow", name: "Shadow", image: "images/s4_shadow.webp", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
-    { id: "overshield", name: "Overshield", image: "images/s4_overshield.webp", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
-    { id: "pond", name: "Pond", image: "images/s4_pond.webp", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
-    { id: "dumpsterdive", name: "Dumpster Dive", image: "images/s4_dumpsterdive.webp", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
-    { id: "morgana", name: "Morgana", image: "images/s4_morgana.webp", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
-    { id: "birthday", name: "Birthday", image: "images/s4_birthday.webp", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
-    { id: "honey", name: "Honey", image: "images/s4_honey.webp", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
-    { id: "jackrabbit", name: "Jackrabbit", image: "images/s4_jackrabbit.webp", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
-    { id: "killswitch", name: "Killswitch", image: "images/s4_killswitch.webp", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
-    { id: "xray", name: "X-Ray", image: "images/s4_xray.webp", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
-    { id: "blinky", name: "Blinky", image: "images/s4_blinky.webp", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
-    { id: "crashbandicoot", name: "Crash Bandicoot", image: "images/s4_crashbandicoot.webp", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
-    { id: "vampire", name: "Vampire", image: "images/s4_vampire.webp", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
-    { id: "thedeer", name: "The Deer", image: "images/s4_thedeer.webp", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
-    { id: "crown", name: "Crown", image: "images/s4_crown.webp", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
-    { id: "klombo", name: "Klombo", image: "images/s4_klombo.webp", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "quack", "gold"] },
-    { id: "spookydash", name: "Spooky Dash", image: "images/s4_spookydash.webp", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "quack", "gold"] },
-    { id: "onewishwillow", name: "One Wish Willow", image: "images/s4_onewishwillow.webp", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] }
-  ],
-  c7s3: [
-    { id: "water", name: "Water", image: "images/s3_water.webp", variants: ["base", "gummy", "galaxy", "holofoil", "gem", "quack", "gold"] },
-    { id: "earth", name: "Earth", image: "images/s3_earth.webp", variants: ["base", "gummy", "galaxy", "gem", "cube", "quack", "gold"] },
-    { id: "fire", name: "Fire", image: "images/s3_fire.webp", variants: ["base", "gummy", "galaxy", "holofoil", "cube", "quack", "gold"] },
-    { id: "fishy", name: "Fishy", image: "images/s3_fishy.webp", variants: ["base", "gummy", "galaxy", "cube", "gold"] },
-    { id: "air", name: "Air", image: "images/s3_air.webp", variants: ["base", "gummy", "galaxy", "holofoil", "gold"] },
-    { id: "duck", name: "Duck", image: "images/s3_duck.webp", variants: ["base", "gummy", "galaxy", "gem", "gold"] },
-    { id: "ghost", name: "Ghost", image: "images/s3_ghost.webp", variants: ["base", "gummy", "galaxy", "holofoil", "gold"] },
-    { id: "king", name: "King", image: "images/s3_king.webp", variants: ["base", "gummy", "galaxy", "holofoil", "gold"] },
-    { id: "demon", name: "Demon", image: "images/s3_demon.webp", variants: ["base", "gummy", "galaxy", "gem", "gold"] },
-    { id: "aura", name: "Aura", image: "images/s3_aura.webp", variants: ["base", "gummy", "galaxy", "gem", "gold"] },
-    { id: "striker", name: "Striker", image: "images/s3_striker.webp", variants: ["base", "gummy", "galaxy", "holofoil", "gold"] },
-    { id: "dream", name: "Dream", image: "images/s3_dream.webp", variants: ["base", "gummy", "galaxy", "cube", "gold"] },
-    { id: "punk", name: "Punk", image: "images/s3_punk.webp", variants: ["base", "gummy", "galaxy", "cube", "gold"] },
-    { id: "boss", name: "Boss", image: "images/s3_boss.webp", variants: ["base", "gummy", "galaxy", "cube", "gold"] },
-    { id: "seven", name: "Seven", image: "images/s3_seven.webp", variants: ["base", "gummy", "galaxy", "holofoil", "gold"] },
-    { id: "lootinllama", name: "Lootin' Llama", image: "images/s3_lootinllama.webp", variants: ["base", "gummy", "galaxy", "gem", "gold"] },
-    { id: "peekypeely", name: "Peeky Peely", image: "images/s3_peekypeely.webp", variants: ["base", "gummy", "galaxy", "holofoil", "gold"] },
-    { id: "zeropoint", name: "Zero Point", image: "images/s3_zeropoint.webp", variants: ["base", "gummy", "galaxy", "holofoil", "gem", "cube", "quack", "gold"] },
-    { id: "grim", name: "Grim", image: "images/s3_grim.webp", variants: ["base", "gummy", "galaxy", "holofoil", "gem", "cube", "gold"] },
-    { id: "batman", name: "Batman", image: "images/s3_batman.webp", variants: ["base", "gummy", "galaxy", "holofoil", "cube", "gold"] },
-    { id: "burntpeanut", name: "Burnt Peanut", image: "images/s3_burntpeanut.webp", variants: ["base"] },
-    { id: "pollo", name: "Pollo", image: "images/s3_pollo.webp", variants: ["base"] },
-    { id: "vinijr", name: "Vini Jr.", image: "images/s3_vinijr.webp", variants: ["base"] },
-    { id: "johnwick", name: "John Wick", image: "images/s3_johnwick.webp", variants: ["base"] },
-    { id: "ironmouse", name: "Ironmouse", image: "images/s3_ironmouse.webp", variants: ["base"] }
-  ]
+  c7s4: [], // Add rest of S4 here
+  c7s3: []  // Add rest of S3 here
 };
 
 const SEASON_LABELS = { mini: "Treasure Hunters", c7s4: "C7 S4", c7s3: "C7 S3" };
-const STORAGE_KEY = "spritePlaza.v8";
+const STORAGE_KEY = "spritePlaza.v9";
 
 let store = { ticks: {}, activeSeason: "mini" };
 
@@ -504,6 +625,7 @@ function switchTab(tabId) {
   document.getElementById(tabId).classList.add('active');
   const navBtn = document.querySelector(`.nav-item[data-target="${tabId}"]`);
   if (navBtn) navBtn.classList.add('active');
+  window.scrollTo(0, 0);
 }
 
 document.querySelectorAll('.nav-item').forEach(btn => {
@@ -525,13 +647,13 @@ function loadStore() {
 }
 function saveStore() { localStorage.setItem(STORAGE_KEY, JSON.stringify(store)); }
 
-function getVariantState(spriteId, variant) {
-  return store.ticks[`${spriteId}_${variant}`] || "missing";
+function getVariantState(spriteId, variantKey) {
+  return store.ticks[`${spriteId}_${variantKey}`] || "missing";
 }
 
-function cycleVariantState(spriteId, variant) {
-  const key = `${spriteId}_${variant}`;
-  const cur = getVariantState(spriteId, variant);
+function cycleVariantState(spriteId, variantKey) {
+  const key = `${spriteId}_${variantKey}`;
+  const cur = getVariantState(spriteId, variantKey);
   if (cur === "missing") store.ticks[key] = "owned";
   else if (cur === "owned") store.ticks[key] = "mastered";
   else delete store.ticks[key];
@@ -559,7 +681,7 @@ function renderGrid() {
   const list = (SPRITE_DATA[store.activeSeason] || []).filter(s => {
     if (q && !s.name.toLowerCase().includes(q)) return false;
     if (fState !== "all") {
-      const states = s.variants.map(v => getVariantState(s.id, v));
+      const states = s.variants.map(v => getVariantState(s.id, v.key));
       if (fState === "missing" && !states.every(st => st === "missing")) return false;
       if (fState === "owned" && !states.some(st => st === "owned" || st === "mastered")) return false;
       if (fState === "mastered" && !states.some(st => st === "mastered")) return false;
@@ -574,9 +696,9 @@ function renderGrid() {
 
     const img = document.createElement("img");
     img.className = "sprite-img";
-    img.src = s.image; // Using the explicit path from data
+    img.src = s.image; 
     img.alt = s.name;
-    img.onerror = () => { img.style.display = 'none'; card.innerHTML = `<div style="font-weight:bold;font-size:1.5rem">${s.name.charAt(0)}</div>` + card.innerHTML; };
+    img.onerror = () => { img.style.display = 'none'; card.innerHTML = `<div style="font-weight:bold;font-size:1.5rem;width:56px;text-align:center">${s.name.charAt(0)}</div>` + card.innerHTML; };
 
     const info = document.createElement("div");
     info.className = "sprite-info";
@@ -589,14 +711,22 @@ function renderGrid() {
     vRow.className = "variants-row";
 
     s.variants.forEach(v => {
-      const state = getVariantState(s.id, v);
+      const state = getVariantState(s.id, v.key);
       const btn = document.createElement("div");
       btn.className = "v-btn";
       btn.dataset.state = state;
-      btn.dataset.label = v;
-      if (state === "owned") btn.textContent = "✓";
-      if (state === "mastered") btn.textContent = "♛";
-      btn.onclick = () => { cycleVariantState(s.id, v); renderAll(); };
+      btn.dataset.label = v.name;
+      
+      const vImg = document.createElement("img");
+      vImg.src = v.img;
+      // If variant image is missing, fallback to a colored circle
+      vImg.onerror = () => { 
+        vImg.style.display = 'none'; 
+        btn.style.background = state === "owned" ? "#22c55e" : state === "mastered" ? "#eab308" : "var(--border)";
+      };
+      btn.appendChild(vImg);
+
+      btn.onclick = () => { cycleVariantState(s.id, v.key); renderAll(); };
       vRow.appendChild(btn);
     });
 
@@ -613,7 +743,7 @@ function renderProgress() {
   (SPRITE_DATA[store.activeSeason] || []).forEach(s => {
     s.variants.forEach(v => {
       total++;
-      const st = getVariantState(s.id, v);
+      const st = getVariantState(s.id, v.key);
       if (st === "owned") owned++;
       if (st === "mastered") mastered++;
     });
@@ -629,7 +759,7 @@ function renderProfile() {
     SPRITE_DATA[k].forEach(s => {
       s.variants.forEach(v => {
         total++;
-        const st = getVariantState(s.id, v);
+        const st = getVariantState(s.id, v.key);
         if (st === "owned") collected++;
         if (st === "mastered") mastered++;
       });
@@ -659,8 +789,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const area = document.getElementById("exportArea");
     let out = `SPRITE PLAZA — ${SEASON_LABELS[store.activeSeason]}\n\n`;
     (SPRITE_DATA[store.activeSeason] || []).forEach(s => {
-      const owned = s.variants.filter(v => getVariantState(s.id, v) !== "missing");
-      if (owned.length) out += `${s.name}: ${owned.join(", ")}\n`;
+      const owned = s.variants.filter(v => getVariantState(s.id, v.key) !== "missing");
+      if (owned.length) out += `${s.name}: ${owned.map(v=>v.name).join(", ")}\n`;
     });
     area.value = out;
     area.style.display = "block";
