@@ -39,16 +39,7 @@
   header h1 { margin: 0; font-size: 1.5rem; letter-spacing: 0.5px; }
   header h1 span { color: var(--accent); }
   .byline { color: var(--muted); font-size: 0.85rem; }
-  .epic-status { display: flex; align-items: center; gap: 8px; }
-  .epic-btn {
-    background: var(--epic); color: #fff; border: none; padding: 8px 16px;
-    border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600;
-  }
-  .epic-btn:hover { filter: brightness(1.1); }
-  .epic-btn.linked { background: #1a5c2e; }
-  .epic-dot { width: 8px; height: 8px; border-radius: 50%; background: #666; }
-  .epic-dot.on { background: #2ecc71; }
-
+  
   .section-tabs {
     display: flex; gap: 4px; background: var(--panel);
     border-bottom: 1px solid #2f3760; padding: 0 24px;
@@ -85,6 +76,7 @@
   }
   .season-tab:hover { color: var(--text); border-color: var(--accent); }
   .season-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  
   .progress-wrap {
     background: var(--panel); border: 1px solid #2f3760; border-radius: 12px;
     padding: 14px 18px; margin-bottom: 18px;
@@ -92,36 +84,41 @@
   .progress-label { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--muted); margin-bottom: 8px; }
   .progress-bar { height: 10px; background: var(--panel-2); border-radius: 999px; overflow: hidden; }
   .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--owned)); transition: width 0.3s; }
+
   .grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 12px;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
   }
   .sprite {
     background: var(--panel); border: 1px solid #2f3760; border-radius: 12px;
-    padding: 12px; display: flex; flex-direction: column; gap: 8px;
-    cursor: pointer; user-select: none; transition: transform 0.1s, border-color 0.15s;
+    padding: 12px; display: flex; flex-direction: column; gap: 10px;
     position: relative;
   }
-  .sprite:hover { transform: translateY(-2px); border-color: var(--accent); }
-  .sprite .thumb {
-    width: 100%; aspect-ratio: 1; border-radius: 8px;
-    background: var(--missing); display: flex; align-items: center; justify-content: center;
-    font-size: 2rem; font-weight: bold; color: #aab2d8; overflow: hidden;
+  .sprite-header {
+    display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #2f3760; padding-bottom: 10px;
   }
-  .sprite .thumb img { width: 100%; height: 100%; object-fit: cover; }
-  .sprite .name { font-size: 0.8rem; font-weight: 600; line-height: 1.2; }
-  .sprite .meta { font-size: 0.7rem; color: var(--muted); }
-  .sprite .badge {
-    position: absolute; top: 8px; right: 8px; font-size: 0.6rem;
-    padding: 2px 6px; border-radius: 999px; font-weight: 700;
+  .sprite-img {
+    width: 48px; height: 48px; border-radius: 8px; background: var(--panel-2); object-fit: contain;
   }
-  .sprite[data-state="owned"] { border-color: var(--owned); }
-  .sprite[data-state="owned"] .thumb { background: rgba(46,204,113,0.18); }
-  .sprite[data-state="owned"] .badge { background: var(--owned); color: #06210f; }
-  .sprite[data-state="mastered"] { border-color: var(--mastered); }
-  .sprite[data-state="mastered"] .thumb { background: rgba(241,196,15,0.18); }
-  .sprite[data-state="mastered"] .badge { background: var(--mastered); color: #2b2000; }
-  .sprite[data-state="missing"] .badge { background: var(--missing); color: #c5cdf0; }
+  .sprite-info { flex: 1; }
+  .sprite-name { font-size: 0.95rem; font-weight: 700; line-height: 1.1; }
+  .sprite-rarity { font-size: 0.75rem; color: var(--muted); }
+  
+  .variants-grid {
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .variant-btn {
+    background: var(--panel-2); border: 1px solid #3a4166; color: var(--muted);
+    padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 600;
+    cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.15s;
+    text-transform: capitalize;
+  }
+  .variant-btn:hover { border-color: var(--accent); color: var(--text); }
+  
+  .variant-btn[data-state="owned"] { background: rgba(46,204,113,0.15); border-color: var(--owned); color: var(--owned); }
+  .variant-btn[data-state="mastered"] { background: rgba(241,196,15,0.15); border-color: var(--mastered); color: var(--mastered); }
+  .variant-btn[data-state="missing"] { opacity: 0.6; }
+
   .panel {
     background: var(--panel); border: 1px solid #2f3760; border-radius: 12px;
     padding: 16px; margin-top: 24px;
@@ -129,11 +126,11 @@
   .panel h2 { margin: 0 0 12px; font-size: 1.1rem; }
   .panel p.hint { color: var(--muted); font-size: 0.8rem; margin: 0 0 12px; }
   .btn-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-  button {
+  button.main-btn {
     background: var(--accent); color: #fff; border: none; padding: 9px 16px;
     border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600;
   }
-  button:hover { filter: brightness(1.15); }
+  button.main-btn:hover { filter: brightness(1.15); }
   button.secondary { background: var(--panel-2); color: var(--text); border: 1px solid #3a4166; }
   button.danger { background: var(--danger); }
   .export-box { margin-top: 10px; display: none; }
@@ -144,7 +141,6 @@
   }
   .empty { color: var(--muted); font-size: 0.9rem; padding: 20px; text-align: center; }
 
-  /* COMING SOON */
   .coming-soon {
     background: var(--panel); border: 1px dashed var(--accent); border-radius: 16px;
     padding: 60px 24px; text-align: center; margin-top: 20px;
@@ -152,7 +148,6 @@
   .coming-soon h2 { margin: 0 0 12px; font-size: 1.6rem; }
   .coming-soon p { color: var(--muted); font-size: 0.95rem; max-width: 500px; margin: 0 auto; line-height: 1.5; }
 
-  /* PROFILE */
   .profile-card {
     background: var(--panel); border: 1px solid #2f3760; border-radius: 16px;
     padding: 24px; margin-top: 20px;
@@ -190,11 +185,6 @@
     <h1>SPRITE <span>PLAZA</span></h1>
     <div class="byline">Made by Midnight</div>
   </div>
-  <div class="epic-status">
-    <div class="epic-dot" id="epicDot"></div>
-    <span class="byline" id="epicLabel">Not linked</span>
-    <button class="epic-btn" id="epicLoginBtn" onclick="startEpicLogin()">Link Epic Account</button>
-  </div>
 </header>
 
 <nav class="section-tabs">
@@ -204,17 +194,16 @@
 </nav>
 
 <main>
-  <!-- ============ SPRITE PLAZA ============ -->
   <section class="section active" id="sprite-plaza">
     <div class="season-tabs" id="seasonTabs"></div>
 
     <div class="toolbar">
       <input type="text" id="search" placeholder="Search sprites by name..." />
       <select id="filterState">
-        <option value="all">All states</option>
-        <option value="owned">Owned</option>
-        <option value="mastered">Mastered</option>
-        <option value="missing">Missing</option>
+        <option value="all">All sprites</option>
+        <option value="owned">Has Owned</option>
+        <option value="mastered">Has Mastered</option>
+        <option value="missing">Fully Missing</option>
       </select>
       <select id="filterRarity">
         <option value="all">All rarities</option>
@@ -228,7 +217,7 @@
 
     <div class="progress-wrap">
       <div class="progress-label">
-        <span id="progressText">0 / 0 collected</span>
+        <span id="progressText">0 / 0 variants collected</span>
         <span id="masteredText">0 mastered</span>
       </div>
       <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
@@ -239,10 +228,9 @@
 
     <div class="panel">
       <h2>Export collection</h2>
-      <p class="hint">Save a text list or PNG image of your current season's sprites.</p>
+      <p class="hint">Save a text list of your current season's variants.</p>
       <div class="btn-row">
-        <button id="exportText">Export as text</button>
-        <button class="secondary" id="exportImage">Export as image (PNG)</button>
+        <button class="main-btn" id="exportText">Export as text</button>
       </div>
       <div class="export-box" id="exportBox">
         <textarea id="exportArea" readonly></textarea>
@@ -258,7 +246,6 @@
     </div>
   </section>
 
-  <!-- ============ TRADING PLAZA ============ -->
   <section class="section" id="trading-plaza">
     <div class="coming-soon">
       <h2>🚧 Coming Soon</h2>
@@ -266,28 +253,27 @@
     </div>
   </section>
 
-  <!-- ============ PROFILE ============ -->
   <section class="section" id="profile">
     <div class="profile-card">
       <div class="profile-header">
         <div class="profile-avatar">M</div>
         <div>
           <div class="profile-name">Midnight</div>
-          <div class="profile-sub" id="profileEpicStatus">Epic account not linked</div>
+          <div class="profile-sub">Sprite Plaza Creator</div>
         </div>
       </div>
       <div class="profile-stats">
         <div class="stat-box">
           <div class="num" id="profileCollected">0</div>
-          <div class="lbl">Collected</div>
+          <div class="lbl">Variants Owned</div>
         </div>
         <div class="stat-box">
           <div class="num" id="profileMastered">0</div>
-          <div class="lbl">Mastered</div>
+          <div class="lbl">Variants Mastered</div>
         </div>
         <div class="stat-box">
           <div class="num" id="profileTotal">0</div>
-          <div class="lbl">Total Sprites</div>
+          <div class="lbl">Total Variants</div>
         </div>
       </div>
     </div>
@@ -299,98 +285,88 @@
 <script>
 /*
   ============================================================
-  EPIC OAUTH CONFIG — REPLACE THESE VALUES
+  IMAGE CONFIGURATION
   ============================================================
+  Your images are webp, inside the "images" folder.
 */
-const EPIC_CLIENT_ID = "YOUR_CLIENT_ID";
-const SITE_URL = "https://YOUR-SITE.netlify.app";
-const REDIRECT_PATH = "/index.html";
-const EPIC_AUTH_URL = "https://www.epicgames.com/id/authorize";
-const EPIC_SCOPES = "basic_profile";
+const IMG_EXT = "webp"; 
+const IMG_PATH = "images/";
 
-/*
-  ============================================================
-  SPRITE DATA
-  ============================================================
-  Full list of 59 Sprites from your screenshots.
-  Real images loaded from SpriteCatch.
-  ============================================================
-*/
 const SPRITE_DATA = {
   mini: [
-    { id: "mini-halfpeeld", name: "Halfpeel'd", rarity: "Rare", image: "https://spritecatch.com/images/sprites/halfpeeld.webp" },
-    { id: "mini-repete", name: "Re-Pete", rarity: "Rare", image: "https://spritecatch.com/images/sprites/re-pete.webp" },
-    { id: "mini-barry", name: "Barry O'Fish", rarity: "Rare", image: "https://spritecatch.com/images/sprites/barry-ofish.webp" },
-    { id: "mini-wayfinder", name: "Wayfinder", rarity: "Rare", image: "https://spritecatch.com/images/sprites/wayfinder.webp" },
-    { id: "mini-chester", name: "Chester", rarity: "Epic", image: "https://spritecatch.com/images/sprites/chester.webp" },
-    { id: "mini-kelper", name: "Kelper", rarity: "Epic", image: "https://spritecatch.com/images/sprites/kelper.webp" },
-    { id: "mini-exmarks", name: "Exmarks", rarity: "Epic", image: "https://spritecatch.com/images/sprites/exmarks.webp" },
-    { id: "mini-squibbly", name: "Lil' Squibbly", rarity: "Epic", image: "https://spritecatch.com/images/sprites/lil-squibbly.webp" },
-    { id: "mini-squiplash", name: "Squiplash", rarity: "Epic", image: "https://spritecatch.com/images/sprites/squiplash.webp" },
-    { id: "mini-flacko", name: "Lil' Flacko", rarity: "Legendary", image: "https://spritecatch.com/images/sprites/lil-flacko.webp" },
-    { id: "mini-uzi", name: "Lil' Uzi Vert Jr.", rarity: "Legendary", image: "https://spritecatch.com/images/sprites/lil-uzi-vert-jr.webp" },
-    { id: "mini-oscar", name: "Sir Oscar the Second", rarity: "Legendary", image: "https://spritecatch.com/images/sprites/sir-oscar-the-second.webp" },
-    { id: "mini-snail", name: "Transponder Snail", rarity: "Legendary", image: "https://spritecatch.com/images/sprites/transponder-snail.webp" },
-    { id: "mini-plundarrgh", name: "Plundarrgh", rarity: "Mythic", image: "https://spritecatch.com/images/sprites/plundarrgh.webp" },
-    { id: "mini-miku", name: "Mini Miku", rarity: "Mythic", image: "https://spritecatch.com/images/sprites/mini-miku.webp" },
-    { id: "mini-sweetdreams", name: "Sweet Dreams", rarity: "Mythic", image: "https://spritecatch.com/images/sprites/sweet-dreams.webp" },
-    { id: "mini-zee", name: "Zee", rarity: "Mythic", image: "https://spritecatch.com/images/sprites/zee.webp" }
+    { id: "halfpeeld", name: "Halfpeel'd", rarity: "Rare", variants: ["base", "fortune", "cursed", "gold"] },
+    { id: "repete", name: "Re-Pete", rarity: "Rare", variants: ["base", "fortune", "cursed", "gold"] },
+    { id: "barryofish", name: "Barry O'Fish", rarity: "Rare", variants: ["base", "fortune", "cursed", "gold"] },
+    { id: "wayfinder", name: "Wayfinder", rarity: "Rare", variants: ["base", "fortune", "cursed", "gold"] },
+    { id: "chester", name: "Chester", rarity: "Epic", variants: ["base", "fortune", "cursed", "gold"] },
+    { id: "kelper", name: "Kelper", rarity: "Epic", variants: ["base", "fortune", "cursed", "gold"] },
+    { id: "exmarks", name: "Exmarks", rarity: "Epic", variants: ["base", "fortune", "cursed", "gold"] },
+    { id: "lilsquibbly", name: "Lil' Squibbly", rarity: "Epic", variants: ["base", "fortune", "cursed", "gold"] },
+    { id: "squiplash", name: "Squiplash", rarity: "Epic", variants: ["base", "fortune", "cursed", "gold"] },
+    { id: "lilflacko", name: "Lil' Flacko", rarity: "Legendary", variants: ["base", "fortune", "cursed", "gold"] },
+    { id: "liluzi", name: "Lil' Uzi Vert Jr.", rarity: "Legendary", variants: ["base", "fortune", "cursed", "gold"] },
+    { id: "siroscar", name: "Sir Oscar the Second", rarity: "Legendary", variants: ["base", "fortune", "cursed", "gold"] },
+    { id: "transpondersnail", name: "Transponder Snail", rarity: "Legendary", variants: ["base"] },
+    { id: "plundarrgh", name: "Plundarrgh", rarity: "Mythic", variants: ["base", "fortune", "cursed", "gold"] },
+    { id: "minimiku", name: "Mini Miku", rarity: "Mythic", variants: ["base", "fortune", "cursed", "gold"] },
+    { id: "sweetdreams", name: "Sweet Dreams", rarity: "Mythic", variants: ["base"] },
+    { id: "zee", name: "Zee", rarity: "Mythic", variants: ["base"] }
   ],
   c7s4: [
-    { id: "c7s4-jonesy", name: "Jonesy", rarity: "Rare", image: "https://spritecatch.com/images/sprites/jonesy.webp" },
-    { id: "c7s4-adventure", name: "Adventure", rarity: "Rare", image: "https://spritecatch.com/images/sprites/adventure.webp" },
-    { id: "c7s4-bush", name: "Bush", rarity: "Rare", image: "https://spritecatch.com/images/sprites/bush.webp" },
-    { id: "c7s4-8bit", name: "8-Bit", rarity: "Rare", image: "https://spritecatch.com/images/sprites/8-bit.webp" },
-    { id: "c7s4-megaman", name: "Mega Man", rarity: "Rare", image: "https://spritecatch.com/images/sprites/mega-man.webp" },
-    { id: "c7s4-onigiri", name: "Onigiri", rarity: "Rare", image: "https://spritecatch.com/images/sprites/onigiri.webp" },
-    { id: "c7s4-stormscout", name: "Storm Scout", rarity: "Rare", image: "https://spritecatch.com/images/sprites/storm-scout.webp" },
-    { id: "c7s4-sonic", name: "Sonic", rarity: "Epic", image: "https://spritecatch.com/images/sprites/sonic.webp" },
-    { id: "c7s4-tails", name: "Tails", rarity: "Epic", image: "https://spritecatch.com/images/sprites/tails.webp" },
-    { id: "c7s4-shadow", name: "Shadow", rarity: "Epic", image: "https://spritecatch.com/images/sprites/shadow.webp" },
-    { id: "c7s4-overshield", name: "Overshield", rarity: "Epic", image: "https://spritecatch.com/images/sprites/overshield.webp" },
-    { id: "c7s4-pond", name: "Pond", rarity: "Epic", image: "https://spritecatch.com/images/sprites/pond.webp" },
-    { id: "c7s4-dumpster", name: "Dumpster Dive", rarity: "Epic", image: "https://spritecatch.com/images/sprites/dumpster-dive.webp" },
-    { id: "c7s4-morgana", name: "Morgana", rarity: "Epic", image: "https://spritecatch.com/images/sprites/morgana.webp" },
-    { id: "c7s4-birthday", name: "Birthday", rarity: "Epic", image: "https://spritecatch.com/images/sprites/birthday.webp" },
-    { id: "c7s4-honey", name: "Honey", rarity: "Epic", image: "https://spritecatch.com/images/sprites/honey.webp" },
-    { id: "c7s4-jackrabbit", name: "Jackrabbit", rarity: "Legendary", image: "https://spritecatch.com/images/sprites/jackrabbit.webp" },
-    { id: "c7s4-killswitch", name: "Killswitch", rarity: "Legendary", image: "https://spritecatch.com/images/sprites/killswitch.webp" },
-    { id: "c7s4-xray", name: "X-Ray", rarity: "Legendary", image: "https://spritecatch.com/images/sprites/x-ray.webp" },
-    { id: "c7s4-blinky", name: "Blinky", rarity: "Legendary", image: "https://spritecatch.com/images/sprites/blinky.webp" },
-    { id: "c7s4-crash", name: "Crash Bandicoot", rarity: "Legendary", image: "https://spritecatch.com/images/sprites/crash-bandicoot.webp" },
-    { id: "c7s4-vampire", name: "Vampire", rarity: "Legendary", image: "https://spritecatch.com/images/sprites/vampire.webp" },
-    { id: "c7s4-deer", name: "The Deer", rarity: "Legendary", image: "https://spritecatch.com/images/sprites/the-deer.webp" },
-    { id: "c7s4-crown", name: "Crown", rarity: "Mythic", image: "https://spritecatch.com/images/sprites/crown.webp" },
-    { id: "c7s4-klombo", name: "Klombo", rarity: "Mythic", image: "https://spritecatch.com/images/sprites/klombo.webp" },
-    { id: "c7s4-spooky", name: "Spooky Dash", rarity: "Mythic", image: "https://spritecatch.com/images/sprites/spooky-dash.webp" },
-    { id: "c7s4-willow", name: "One Wish Willow", rarity: "Mythic", image: "https://spritecatch.com/images/sprites/one-wish-willow.webp" }
+    { id: "jonesy", name: "Jonesy", rarity: "Rare", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "quack", "gold"] },
+    { id: "adventure", name: "Adventure", rarity: "Rare", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "quack", "gold"] },
+    { id: "bush", name: "Bush", rarity: "Rare", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "quack", "gold"] },
+    { id: "8bit", name: "8-Bit", rarity: "Rare", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
+    { id: "megaman", name: "Mega Man", rarity: "Rare", variants: ["base"] },
+    { id: "onigiri", name: "Onigiri", rarity: "Rare", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
+    { id: "stormscout", name: "Storm Scout", rarity: "Rare", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
+    { id: "sonic", name: "Sonic", rarity: "Epic", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
+    { id: "tails", name: "Tails", rarity: "Epic", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
+    { id: "shadow", name: "Shadow", rarity: "Epic", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
+    { id: "overshield", name: "Overshield", rarity: "Epic", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
+    { id: "pond", name: "Pond", rarity: "Epic", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
+    { id: "dumpsterdive", name: "Dumpster Dive", rarity: "Epic", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
+    { id: "morgana", name: "Morgana", rarity: "Epic", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
+    { id: "birthday", name: "Birthday", rarity: "Epic", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
+    { id: "honey", name: "Honey", rarity: "Epic", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
+    { id: "jackrabbit", name: "Jackrabbit", rarity: "Legendary", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
+    { id: "killswitch", name: "Killswitch", rarity: "Legendary", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
+    { id: "xray", name: "X-Ray", rarity: "Legendary", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
+    { id: "blinky", name: "Blinky", rarity: "Legendary", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
+    { id: "crashbandicoot", name: "Crash Bandicoot", rarity: "Legendary", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
+    { id: "vampire", name: "Vampire", rarity: "Legendary", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
+    { id: "thedeer", name: "The Deer", rarity: "Legendary", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
+    { id: "crown", name: "Crown", rarity: "Mythic", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] },
+    { id: "klombo", name: "Klombo", rarity: "Mythic", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "quack", "gold"] },
+    { id: "spookydash", name: "Spooky Dash", rarity: "Mythic", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "quack", "gold"] },
+    { id: "onewishwillow", name: "One Wish Willow", rarity: "Mythic", variants: ["base", "cheatmaster", "loothacker", "bountyhunter", "trickortreat", "gold"] }
   ],
   c7s3: [
-    { id: "c7s3-water", name: "Water", rarity: "Rare", image: "https://spritecatch.com/images/sprites/water.webp" },
-    { id: "c7s3-earth", name: "Earth", rarity: "Rare", image: "https://spritecatch.com/images/sprites/earth.webp" },
-    { id: "c7s3-fire", name: "Fire", rarity: "Rare", image: "https://spritecatch.com/images/sprites/fire.webp" },
-    { id: "c7s3-fishy", name: "Fishy", rarity: "Rare", image: "https://spritecatch.com/images/sprites/fishy.webp" },
-    { id: "c7s3-air", name: "Air", rarity: "Rare", image: "https://spritecatch.com/images/sprites/air.webp" },
-    { id: "c7s3-duck", name: "Duck", rarity: "Epic", image: "https://spritecatch.com/images/sprites/duck.webp" },
-    { id: "c7s3-ghost", name: "Ghost", rarity: "Epic", image: "https://spritecatch.com/images/sprites/ghost.webp" },
-    { id: "c7s3-king", name: "King", rarity: "Epic", image: "https://spritecatch.com/images/sprites/king.webp" },
-    { id: "c7s3-demon", name: "Demon", rarity: "Epic", image: "https://spritecatch.com/images/sprites/demon.webp" },
-    { id: "c7s3-aura", name: "Aura", rarity: "Epic", image: "https://spritecatch.com/images/sprites/aura.webp" },
-    { id: "c7s3-striker", name: "Striker", rarity: "Epic", image: "https://spritecatch.com/images/sprites/striker.webp" },
-    { id: "c7s3-dream", name: "Dream", rarity: "Legendary", image: "https://spritecatch.com/images/sprites/dream.webp" },
-    { id: "c7s3-punk", name: "Punk", rarity: "Legendary", image: "https://spritecatch.com/images/sprites/punk.webp" },
-    { id: "c7s3-boss", name: "Boss", rarity: "Legendary", image: "https://spritecatch.com/images/sprites/boss.webp" },
-    { id: "c7s3-seven", name: "Seven", rarity: "Legendary", image: "https://spritecatch.com/images/sprites/seven.webp" },
-    { id: "c7s3-llama", name: "Lootin' Llama", rarity: "Legendary", image: "https://spritecatch.com/images/sprites/llama.webp" },
-    { id: "c7s3-peely", name: "Peeky Peely", rarity: "Legendary", image: "https://spritecatch.com/images/sprites/peeky-peely.webp" },
-    { id: "c7s3-zero", name: "Zero Point", rarity: "Mythic", image: "https://spritecatch.com/images/sprites/zero-point.webp" },
-    { id: "c7s3-grim", name: "Grim", rarity: "Mythic", image: "https://spritecatch.com/images/sprites/grim.webp" },
-    { id: "c7s3-batman", name: "Batman", rarity: "Mythic", image: "https://spritecatch.com/images/sprites/batman.webp" },
-    { id: "c7s3-burnt", name: "Burnt Peanut", rarity: "Mythic", image: "https://spritecatch.com/images/sprites/burnt-peanut.webp" },
-    { id: "c7s3-pollo", name: "Pollo", rarity: "Mythic", image: "https://spritecatch.com/images/sprites/pollo.webp" },
-    { id: "c7s3-vini", name: "Vini Jr.", rarity: "Mythic", image: "https://spritecatch.com/images/sprites/vini-jr.webp" },
-    { id: "c7s3-johnwick", name: "John Wick", rarity: "Mythic", image: "https://spritecatch.com/images/sprites/john-wick.webp" },
-    { id: "c7s3-ironmouse", name: "Ironmouse", rarity: "Mythic", image: "https://spritecatch.com/images/sprites/ironmouse.webp" }
+    { id: "water", name: "Water", rarity: "Rare", variants: ["base", "gummy", "galaxy", "holofoil", "gem", "quack", "gold"] },
+    { id: "earth", name: "Earth", rarity: "Rare", variants: ["base", "gummy", "galaxy", "gem", "cube", "quack", "gold"] },
+    { id: "fire", name: "Fire", rarity: "Rare", variants: ["base", "gummy", "galaxy", "holofoil", "cube", "quack", "gold"] },
+    { id: "fishy", name: "Fishy", rarity: "Rare", variants: ["base", "gummy", "galaxy", "cube", "gold"] },
+    { id: "air", name: "Air", rarity: "Rare", variants: ["base", "gummy", "galaxy", "holofoil", "gold"] },
+    { id: "duck", name: "Duck", rarity: "Epic", variants: ["base", "gummy", "galaxy", "gem", "gold"] },
+    { id: "ghost", name: "Ghost", rarity: "Epic", variants: ["base", "gummy", "galaxy", "holofoil", "gold"] },
+    { id: "king", name: "King", rarity: "Epic", variants: ["base", "gummy", "galaxy", "holofoil", "gold"] },
+    { id: "demon", name: "Demon", rarity: "Epic", variants: ["base", "gummy", "galaxy", "gem", "gold"] },
+    { id: "aura", name: "Aura", rarity: "Epic", variants: ["base", "gummy", "galaxy", "gem", "gold"] },
+    { id: "striker", name: "Striker", rarity: "Epic", variants: ["base", "gummy", "galaxy", "holofoil", "gold"] },
+    { id: "dream", name: "Dream", rarity: "Legendary", variants: ["base", "gummy", "galaxy", "cube", "gold"] },
+    { id: "punk", name: "Punk", rarity: "Legendary", variants: ["base", "gummy", "galaxy", "cube", "gold"] },
+    { id: "boss", name: "Boss", rarity: "Legendary", variants: ["base", "gummy", "galaxy", "cube", "gold"] },
+    { id: "seven", name: "Seven", rarity: "Legendary", variants: ["base", "gummy", "galaxy", "holofoil", "gold"] },
+    { id: "lootinllama", name: "Lootin' Llama", rarity: "Legendary", variants: ["base", "gummy", "galaxy", "gem", "gold"] },
+    { id: "peekypeely", name: "Peeky Peely", rarity: "Legendary", variants: ["base", "gummy", "galaxy", "holofoil", "gold"] },
+    { id: "zeropoint", name: "Zero Point", rarity: "Mythic", variants: ["base", "gummy", "galaxy", "holofoil", "gem", "cube", "quack", "gold"] },
+    { id: "grim", name: "Grim", rarity: "Mythic", variants: ["base", "gummy", "galaxy", "holofoil", "gem", "cube", "gold"] },
+    { id: "batman", name: "Batman", rarity: "Mythic", variants: ["base", "gummy", "galaxy", "holofoil", "cube", "gold"] },
+    { id: "burntpeanut", name: "Burnt Peanut", rarity: "Mythic", variants: ["base"] },
+    { id: "pollo", name: "Pollo", rarity: "Mythic", variants: ["base"] },
+    { id: "vinijr", name: "Vini Jr.", rarity: "Mythic", variants: ["base"] },
+    { id: "johnwick", name: "John Wick", rarity: "Mythic", variants: ["base"] },
+    { id: "ironmouse", name: "Ironmouse", rarity: "Mythic", variants: ["base"] }
   ]
 };
 
@@ -400,81 +376,17 @@ const SEASON_LABELS = {
   c7s3: "Chapter 7 Season 3"
 };
 
-const STORAGE_KEY = "spritePlaza.v4";
+// Here are the prefixes for your filenames (e.g. th_ for Mini)
+const PREFIXES = { mini: "th_", c7s4: "s4_", c7s3: "s3_" };
+const STORAGE_KEY = "spritePlaza.v6";
 
 let store = { ticks: {}, activeSeason: "mini" };
 
-/* ---------------- Epic OAuth ---------------- */
-function getEpicRedirectUri() { return SITE_URL + REDIRECT_PATH; }
-
-function startEpicLogin() {
-  if (EPIC_CLIENT_ID === "YOUR_CLIENT_ID") {
-    alert("Set EPIC_CLIENT_ID in the script first.");
-    return;
-  }
-  const params = new URLSearchParams({
-    client_id: EPIC_CLIENT_ID,
-    response_type: "code",
-    scope: EPIC_SCOPES,
-    redirect_uri: getEpicRedirectUri()
-  });
-  window.location.href = EPIC_AUTH_URL + "?" + params.toString();
+function getImagePath(season, spriteId, variant) {
+  const prefix = PREFIXES[season] || "";
+  return `${IMG_PATH}${prefix}${spriteId}_${variant}.${IMG_EXT}`;
 }
 
-function handleEpicCallback() {
-  const params = new URLSearchParams(window.location.search);
-  const code = params.get("code");
-  if (!code) return;
-  window.history.replaceState({}, "", window.location.pathname);
-  document.getElementById("epicLabel").textContent = "Exchanging token...";
-  document.getElementById("epicDot").classList.add("on");
-  fetch("/.netlify/functions/epic-token", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ code })
-  })
-  .then(r => r.json())
-  .then(data => {
-    if (data.access_token) {
-      sessionStorage.setItem("epic_access_token", data.access_token);
-      if (data.refresh_token) sessionStorage.setItem("epic_refresh_token", data.refresh_token);
-      document.getElementById("epicLabel").textContent = "Epic linked";
-      document.getElementById("profileEpicStatus").textContent = "Epic account linked";
-      updateProfileStats();
-      alert("Epic account linked!");
-    } else {
-      throw new Error(data.error || "Token exchange failed");
-    }
-  })
-  .catch(err => {
-    console.error(err);
-    document.getElementById("epicLabel").textContent = "Link failed";
-    document.getElementById("epicDot").classList.remove("on");
-    alert("Epic login failed: " + err.message);
-  });
-}
-
-function updateEpicStatus() {
-  const token = sessionStorage.getItem("epic_access_token");
-  const dot = document.getElementById("epicDot");
-  const label = document.getElementById("epicLabel");
-  const btn = document.getElementById("epicLoginBtn");
-  if (token) {
-    dot.classList.add("on");
-    label.textContent = "Epic linked";
-    btn.textContent = "Re-link";
-    btn.classList.add("linked");
-    document.getElementById("profileEpicStatus").textContent = "Epic account linked";
-  } else {
-    dot.classList.remove("on");
-    label.textContent = "Not linked";
-    btn.textContent = "Link Epic Account";
-    btn.classList.remove("linked");
-    document.getElementById("profileEpicStatus").textContent = "Epic account not linked";
-  }
-}
-
-/* ---------------- storage ---------------- */
 function loadStore() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -489,29 +401,42 @@ function saveStore() {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(store)); }
   catch (e) { console.warn(e); }
 }
-function getState(id) { return store.ticks[id] || "missing"; }
-function cycleState(id) {
-  const cur = getState(id);
-  if (cur === "missing") store.ticks[id] = "owned";
-  else if (cur === "owned") store.ticks[id] = "mastered";
-  else delete store.ticks[id];
+
+function getVariantState(spriteId, variant) {
+  const key = `${spriteId}_${variant}`;
+  return store.ticks[key] || "missing";
+}
+
+function cycleVariantState(spriteId, variant) {
+  const key = `${spriteId}_${variant}`;
+  const cur = getVariantState(spriteId, variant);
+  if (cur === "missing") store.ticks[key] = "owned";
+  else if (cur === "owned") store.ticks[key] = "mastered";
+  else delete store.ticks[key];
   saveStore();
 }
+
 function seasonSprites() { return SPRITE_DATA[store.activeSeason] || []; }
 
 function filteredSprites() {
   const q = document.getElementById("search").value.trim().toLowerCase();
   const fState = document.getElementById("filterState").value;
   const fRarity = document.getElementById("filterRarity").value;
+  
   return seasonSprites().filter(s => {
     if (q && !s.name.toLowerCase().includes(q)) return false;
-    if (fState !== "all" && getState(s.id) !== fState) return false;
     if (fRarity !== "all" && s.rarity !== fRarity) return false;
+    
+    if (fState !== "all") {
+      const states = s.variants.map(v => getVariantState(s.id, v));
+      if (fState === "missing" && !states.every(st => st === "missing")) return false;
+      if (fState === "owned" && !states.some(st => st === "owned" || st === "mastered")) return false;
+      if (fState === "mastered" && !states.some(st => st === "mastered")) return false;
+    }
     return true;
   });
 }
 
-/* ---------------- render ---------------- */
 function renderSeasonTabs() {
   const wrap = document.getElementById("seasonTabs");
   wrap.innerHTML = "";
@@ -532,54 +457,82 @@ function renderGrid() {
   empty.style.display = list.length ? "none" : "block";
 
   list.forEach(s => {
-    const state = getState(s.id);
     const card = document.createElement("div");
     card.className = "sprite";
-    card.dataset.state = state;
-    card.title = "Click: Missing → Owned → Mastered → Missing";
 
-    const thumb = document.createElement("div");
-    thumb.className = "thumb";
-    if (s.image) {
-      const img = document.createElement("img");
-      img.src = s.image;
-      img.alt = s.name;
-      img.onerror = () => { img.remove(); thumb.textContent = s.name.charAt(0).toUpperCase(); };
-      thumb.appendChild(img);
-    } else {
-      thumb.textContent = s.name.charAt(0).toUpperCase();
-    }
+    const header = document.createElement("div");
+    header.className = "sprite-header";
 
-    const name = document.createElement("div");
-    name.className = "name";
-    name.textContent = s.name;
+    const img = document.createElement("img");
+    img.className = "sprite-img";
+    // Use base variant for the header image
+    img.src = getImagePath(store.activeSeason, s.id, "base");
+    img.alt = s.name;
+    img.onerror = () => { 
+      img.style.display = 'none'; 
+      const fallback = document.createElement("div");
+      fallback.style = "width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:var(--panel-2);border-radius:8px;font-weight:bold;";
+      fallback.textContent = s.name.charAt(0);
+      header.prepend(fallback);
+    };
 
-    const meta = document.createElement("div");
-    meta.className = "meta";
-    meta.textContent = s.rarity;
+    const info = document.createElement("div");
+    info.className = "sprite-info";
+    info.innerHTML = `<div class="sprite-name">${s.name}</div><div class="sprite-rarity">${s.rarity}</div>`;
 
-    const badge = document.createElement("div");
-    badge.className = "badge";
-    badge.textContent = state === "missing" ? "Missing" : state === "owned" ? "Owned" : "Mastered";
+    header.appendChild(img);
+    header.appendChild(info);
 
-    card.appendChild(badge);
-    card.appendChild(thumb);
-    card.appendChild(name);
-    card.appendChild(meta);
-    card.onclick = () => { cycleState(s.id); renderAll(); };
+    const vGrid = document.createElement("div");
+    vGrid.className = "variants-grid";
+
+    s.variants.forEach(v => {
+      const state = getVariantState(s.id, v);
+      const btn = document.createElement("button");
+      btn.className = "variant-btn";
+      btn.dataset.state = state;
+      
+      // Add small icon based on state
+      let icon = "○";
+      if (state === "owned") icon = "✓";
+      if (state === "mastered") icon = "👑";
+      
+      btn.textContent = `${icon} ${v}`;
+      btn.title = `Click to cycle state for ${v}`;
+      
+      btn.onclick = () => { 
+        cycleVariantState(s.id, v); 
+        renderAll(); 
+      };
+      vGrid.appendChild(btn);
+    });
+
+    card.appendChild(header);
+    card.appendChild(vGrid);
     grid.appendChild(card);
   });
 }
 
 function renderProgress() {
   const all = seasonSprites();
-  const owned = all.filter(s => getState(s.id) === "owned").length;
-  const mastered = all.filter(s => getState(s.id) === "mastered").length;
-  const total = all.length;
-  const collected = owned + mastered;
-  const pct = total ? (collected / total) * 100 : 0;
-  document.getElementById("progressText").textContent = `${collected} / ${total} collected`;
-  document.getElementById("masteredText").textContent = `${mastered} mastered`;
+  let totalVariants = 0;
+  let ownedCount = 0;
+  let masteredCount = 0;
+
+  all.forEach(s => {
+    s.variants.forEach(v => {
+      totalVariants++;
+      const st = getVariantState(s.id, v);
+      if (st === "owned") ownedCount++;
+      if (st === "mastered") masteredCount++;
+    });
+  });
+
+  const collected = ownedCount + masteredCount;
+  const pct = totalVariants ? (collected / totalVariants) * 100 : 0;
+  
+  document.getElementById("progressText").textContent = `${collected} / ${totalVariants} variants collected`;
+  document.getElementById("masteredText").textContent = `${masteredCount} mastered`;
   document.getElementById("progressFill").style.width = pct + "%";
 }
 
@@ -587,10 +540,12 @@ function updateProfileStats() {
   let collected = 0, mastered = 0, total = 0;
   Object.keys(SPRITE_DATA).forEach(k => {
     SPRITE_DATA[k].forEach(s => {
-      total++;
-      const st = getState(s.id);
-      if (st === "owned") collected++;
-      if (st === "mastered") mastered++;
+      s.variants.forEach(v => {
+        total++;
+        const st = getVariantState(s.id, v);
+        if (st === "owned") collected++;
+        if (st === "mastered") mastered++;
+      });
     });
   });
   document.getElementById("profileCollected").textContent = collected;
@@ -605,21 +560,31 @@ function renderAll() {
   updateProfileStats();
 }
 
-/* ---------------- export ---------------- */
 function buildTextExport() {
   const all = seasonSprites();
-  const groups = { owned: [], mastered: [], missing: [] };
-  all.forEach(s => groups[getState(s.id)].push(`${s.name} (${s.rarity})`));
   const lines = [];
   lines.push(`SPRITE PLAZA — ${SEASON_LABELS[store.activeSeason]}`);
   lines.push(`Exported: ${new Date().toLocaleString()}`);
   lines.push("");
-  ["owned", "mastered", "missing"].forEach(k => {
-    const label = k.charAt(0).toUpperCase() + k.slice(1);
-    lines.push(`== ${label} (${groups[k].length}) ==`);
-    if (groups[k].length) groups[k].forEach(n => lines.push(`- ${n}`));
-    else lines.push("(none)");
-    lines.push("");
+  
+  all.forEach(s => {
+    const owned = [];
+    const mastered = [];
+    const missing = [];
+    
+    s.variants.forEach(v => {
+      const st = getVariantState(s.id, v);
+      if (st === "owned") owned.push(v);
+      if (st === "mastered") mastered.push(v);
+      if (st === "missing") missing.push(v);
+    });
+    
+    if (owned.length || mastered.length) {
+      lines.push(`== ${s.name} (${s.rarity}) ==`);
+      if (owned.length) lines.push(`- Owned: ${owned.join(", ")}`);
+      if (mastered.length) lines.push(`- Mastered: ${mastered.join(", ")}`);
+      lines.push("");
+    }
   });
   return lines.join("\n");
 }
@@ -633,63 +598,6 @@ function showTextExport() {
   area.select();
 }
 
-function exportImage() {
-  const list = filteredSprites();
-  if (!list.length) { alert("Nothing to export."); return; }
-  const cols = 5, cell = 180, pad = 16, headerH = 70;
-  const rows = Math.ceil(list.length / cols);
-  const width = cols * cell + pad * 2;
-  const height = headerH + rows * cell + pad * 2;
-  const canvas = document.createElement("canvas");
-  canvas.width = width; canvas.height = height;
-  const ctx = canvas.getContext("2d");
-  ctx.fillStyle = "#0f1220"; ctx.fillRect(0, 0, width, height);
-  ctx.fillStyle = "#e8ecff"; ctx.font = "bold 26px system-ui, sans-serif";
-  ctx.fillText("SPRITE PLAZA", pad, 40);
-  ctx.fillStyle = "#8a93b8"; ctx.font = "14px system-ui, sans-serif";
-  ctx.fillText(`${SEASON_LABELS[store.activeSeason]} — ${new Date().toLocaleDateString()}`, pad, 60);
-  list.forEach((s, i) => {
-    const col = i % cols, row = Math.floor(i / cols);
-    const x = pad + col * cell, y = headerH + pad + row * cell;
-    const state = getState(s.id);
-    const color = state === "owned" ? "#2ecc71" : state === "mastered" ? "#f1c40f" : "#3a4166";
-    ctx.fillStyle = "#1a1f36"; ctx.strokeStyle = color; ctx.lineWidth = 3;
-    roundRect(ctx, x + 6, y + 6, cell - 12, cell - 12, 12); ctx.fill(); ctx.stroke();
-    ctx.fillStyle = state === "missing" ? "#3a4166" : color + "33";
-    roundRect(ctx, x + 20, y + 20, cell - 40, 90, 10); ctx.fill();
-    ctx.fillStyle = "#ffffff"; ctx.font = "bold 42px system-ui, sans-serif"; ctx.textAlign = "center";
-    ctx.fillText(s.name.charAt(0).toUpperCase(), x + cell / 2, y + 80); ctx.textAlign = "left";
-    ctx.fillStyle = "#e8ecff"; ctx.font = "bold 13px system-ui, sans-serif";
-    wrapText(ctx, s.name, cell - 32).slice(0, 2).forEach((line, li) => ctx.fillText(line, x + 16, y + 132 + li * 16));
-    ctx.fillStyle = "#8a93b8"; ctx.font = "11px system-ui, sans-serif";
-    ctx.fillText(s.rarity, x + 16, y + 168);
-    const bt = state === "missing" ? "Missing" : state === "owned" ? "Owned" : "Mastered";
-    ctx.fillStyle = color; const bw = ctx.measureText(bt).width + 14;
-    roundRect(ctx, x + cell - bw - 14, y + 14, bw, 20, 10); ctx.fill();
-    ctx.fillStyle = state === "mastered" ? "#2b2000" : "#fff"; ctx.font = "bold 10px system-ui, sans-serif";
-    ctx.fillText(bt, x + cell - bw - 8, y + 28);
-  });
-  const link = document.createElement("a");
-  link.download = `sprite-plaza-${store.activeSeason}-${Date.now()}.png`;
-  link.href = canvas.toDataURL("image/png"); link.click();
-}
-
-function roundRect(ctx, x, y, w, h, r) {
-  ctx.beginPath(); ctx.moveTo(x + r, y);
-  ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);
-  ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
-}
-function wrapText(ctx, text, maxWidth) {
-  const words = text.split(" "); const lines = []; let cur = "";
-  words.forEach(w => {
-    const test = cur ? cur + " " + w : w;
-    if (ctx.measureText(test).width > maxWidth && cur) { lines.push(cur); cur = w; }
-    else cur = test;
-  });
-  if (cur) lines.push(cur); return lines;
-}
-
-/* ---------------- section switching ---------------- */
 function initSections() {
   document.querySelectorAll(".section-tab").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -701,11 +609,8 @@ function initSections() {
   });
 }
 
-/* ---------------- init ---------------- */
 function init() {
   loadStore();
-  updateEpicStatus();
-  handleEpicCallback();
   renderAll();
   initSections();
 
@@ -719,7 +624,6 @@ function init() {
     renderGrid();
   });
   document.getElementById("exportText").addEventListener("click", showTextExport);
-  document.getElementById("exportImage").addEventListener("click", exportImage);
   document.getElementById("wipeAll").addEventListener("click", () => {
     if (!confirm("Wipe all ticks and settings?")) return;
     store = { ticks: {}, activeSeason: "mini" };
